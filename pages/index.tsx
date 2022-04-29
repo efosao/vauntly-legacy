@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
         <div className="px-4 py-6 sm:px-0">
           <div className="m-4">
-            <h1 className="text-3xl font-bold">Hello world!</h1>
+            <h1 className="text-3xl font-bold">Results</h1>
             <Results />
           </div>
         </div>
