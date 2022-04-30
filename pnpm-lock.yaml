@@ -9,6 +9,7 @@ specifiers:
   '@types/react': 18.0.8
   '@types/react-dom': 18.0.3
   autoprefixer: ^10.4.5
+  classnames: ^2.3.1
   eslint: 8.14.0
   eslint-config-next: 12.1.5
   google-search-results-nodejs: ^2.1.0
@@ -24,6 +25,7 @@ specifiers:
 dependencies:
   '@headlessui/react': 1.6.0_react-dom@18.1.0+react@18.1.0
   '@heroicons/react': 1.0.6_react@18.1.0
+  classnames: 2.3.1
   google-search-results-nodejs: 2.1.0
   graphql: 16.4.0
   graphql-request: 4.2.0_graphql@16.4.0
@@ -591,6 +593,10 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /classnames/2.3.1:
+    resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==}
+    dev: false
 
   /color-convert/2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}

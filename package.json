@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.6.0",
     "@heroicons/react": "^1.0.6",
+    "classnames": "^2.3.1",
     "google-search-results-nodejs": "^2.1.0",
     "graphql": "16",
     "graphql-request": "^4.2.0",
