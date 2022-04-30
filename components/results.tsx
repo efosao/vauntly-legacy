@@ -6,7 +6,7 @@ export default function Results({ posts }: any) {
       {posts.map((p: any) => (
         <SearchRow
           key={p.id}
-          company={p.company}
+          company={p.company_name}
           thumbnail={p.thumbnail}
           title={p.title}
           color={p.id < 15 ? "yellow" : undefined}
