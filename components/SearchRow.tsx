@@ -3,9 +3,12 @@ import Image from "next/image";
 
 type SearchRowType = {
   color: string | null | undefined;
+  company: string | null | undefined;
+  title: string | null | undefined;
+  thumbnail: string | null | undefined;
 };
 
-export function SearchRow({ color }: SearchRowType) {
+export function SearchRow({ color, company, thumbnail, title }: SearchRowType) {
   const containerClasses = cx(
     "p-4 my-4 bg-indigo-200 flex items-center space-x-4 rounded-xl shadow-lg h-24 hover:bg-indigo-300 transition-all duration-300",
     { "bg-yellow-200": color === "yellow" },
@@ -20,13 +23,19 @@ export function SearchRow({ color }: SearchRowType) {
   return (
     <div className={containerClasses}>
       <span className="shrink-0 w-15 flex align-center">
-        <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+        {thumbnail ? (
+          <Image
+            className="rounded-full"
+            src={thumbnail}
+            alt="Vercel Logo"
+            width={45}
+            height={45}
+          />
+        ) : null}
       </span>
       <div className="flex flex-col grow p-1 overflow-hidden">
-        <p>SAP Labs</p>
-        <p className="font-medium truncate">
-          Sr. Software Engineer (React/Node/PostgreSQL)
-        </p>
+        <p>{company}</p>
+        <p className="font-medium truncate">{title}</p>
       </div>
       <div className="tag-container">
         <span className="row-tag">React</span>

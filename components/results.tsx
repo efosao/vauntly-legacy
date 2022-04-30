@@ -1,31 +1,16 @@
 import { SearchRow } from "./SearchRow";
 
-export default function Example() {
-  const data = [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-  ];
-
+export default function Results({ posts }: any) {
   return (
     <div>
-      <SearchRow color="yellow"></SearchRow>
-      {data.map((d, idx) => (
-        <SearchRow key={idx}></SearchRow>
+      {posts.map((p: any) => (
+        <SearchRow
+          key={p.id}
+          company={p.company}
+          thumbnail={p.thumbnail}
+          title={p.title}
+          color={p.id < 15 ? "yellow" : undefined}
+        />
       ))}
     </div>
   );
