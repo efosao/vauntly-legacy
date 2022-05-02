@@ -6,5 +6,14 @@
   @apply flex flex-wrap items-center overflow-hidden h-[5rem];
 }
 .row-tag {
-  @apply bg-white border-2 border-black rounded-xl px-4 h-8 m-1 uppercase font-medium cursor-pointer;
+  @apply text-sm bg-white border-2 border-black rounded-xl px-4 py-1 m-1 uppercase font-medium cursor-pointer hidden md:flex;
+}
+
+.details ul {
+  font-weight: 500;
+  list-style-type: disc;
+}
+
+.details p {
+  white-space: pre-wrap;
 }

@@ -30,9 +30,10 @@ async function getData() {
 
 async function getJobDetails() {
   const queryJobsList = gql`
-    {
-      serp_google_jobs_import(limit: 1) {
+    query GetPostsQuery {
+      serp_google_jobs_import(limit: 1, order_by: { date_created: desc }) {
         raw_data
+        date_created
       }
     }
   `;
@@ -44,20 +45,20 @@ async function getJobDetails() {
   const jobs_list = jobsListResult?.serp_google_jobs_import[0];
   const jobs_results = jobs_list?.raw_data?.jobs_results || []; // take only one
 
-  jobs_results.forEach(async (job: any) => {
+  jobs_results.forEach(async (job) => {
     const { job_id } = job;
     const params = {
       engine: "google_jobs_listing",
       q: job_id,
     };
 
-    search.json(params, (detailInfo: any) => {
+    search.json(params, (detailInfo) => {
       insertPostRecord(job, detailInfo);
     });
   });
 }
 
-async function insertPostRecord(jobInfo: any, jobDetailInfo: any) {
+async function insertPostRecord(jobInfo, jobDetailInfo) {
   const query = gql`
     mutation MyMutation(
       $title: String
@@ -121,7 +122,7 @@ async function insertPostRecord(jobInfo: any, jobDetailInfo: any) {
   try {
     await request("http://localhost:8080/v1/graphql", query, variables);
     console.log(`inserted job - ${job_id}`);
-  } catch (error: any) {
+  } catch (error) {
     // ts-fix
     const errors = error.response.errors;
     console.error(`error inserting job - ${job_id}`);
@@ -129,17 +130,15 @@ async function insertPostRecord(jobInfo: any, jobDetailInfo: any) {
   }
 }
 
-async function getJobs() {
+async function getJobs(q, start = 0) {
   const params = {
     engine: "google_jobs",
-    // q: "React Senior Engineer",
-    // q: "Solidity Engineer",
-    start: 0,
-    q: "Java Engineer",
+    start,
+    q,
     hl: "en",
   };
 
-  search.json(params, (raw: any, err: any) => {
+  search.json(params, (raw, err) => {
     if (err) throw err;
     const { search_metadata, search_parameters, jobs_results } = raw;
     const externalId = search_metadata?.id;
@@ -160,11 +159,11 @@ async function getJobs() {
 async function init() {
   // await getData();
   // await insertData();
-  // await getJobs();
+  // await getJobs("Accountant", 10);
   await getJobDetails();
 }
 
-async function insertData(params: any) {
+async function insertData(params) {
   const query = gql`
     mutation MyMutation(
       $start_index: Int

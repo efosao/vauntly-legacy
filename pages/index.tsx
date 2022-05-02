@@ -1,9 +1,11 @@
+import { request } from "graphql-request";
 import type { NextPage } from "next";
 import Head from "next/head";
+
 import styles from "../styles/Home.module.css";
 import Header from "../components/header";
 import Results from "../components/results";
-import { request } from "graphql-request";
+
 import useSWR, { SWRConfig } from "swr";
 
 const url = `http://localhost:8080/v1/graphql`;
@@ -54,24 +56,20 @@ const Home: NextPage = ({ fallback }: any) => {
         <main className={styles.main}>
           <Header />
 
-          <article className="prose lg:prose-xl">
+          <article className="prose lg:prose-2xl px-4 mx-0 w-full max-w-full">
             <h1>The freshest job postings in the industry.</h1>
-            <p>
-              For years parents have espoused the health benefits of eating
-              garlic bread with cheese to their children, with the food earning
-              such an iconic status in our culture that kids will often dress up
-              as warm, cheesy loaf for Halloween.
-            </p>
+            <div className="flex justify-center bg-pink-200 w-full rounded-md">
+              <p>Discover your next job today</p>
+              <input
+                className="rounded-lg m-4 border-2"
+                placeholder="React Engineer"
+                type="text"
+              />
+            </div>
           </article>
 
-          <input
-            className="rounded-lg m-4 border-2"
-            placeholder="React Engineer"
-            type="text"
-          />
-
           <div className="px-4 py-6 sm:px-0">
-            <div className="m-4">
+            <div className="m-4 anchor">
               <Results posts={posts} />
             </div>
           </div>
