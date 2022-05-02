@@ -1,0 +1,62 @@
+table:
+  schema: public
+  name: posts
+insert_permissions:
+  - role: public
+    permission:
+      check: {}
+      columns:
+        - id
+        - details_metadata
+        - metadata
+        - company_name
+        - data_source
+        - description
+        - external_id
+        - location
+        - post_source
+        - thumbnail
+        - title
+        - created_at
+        - published_at
+        - updated_at
+      backend_only: false
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - id
+        - details_metadata
+        - metadata
+        - company_name
+        - data_source
+        - description
+        - external_id
+        - location
+        - post_source
+        - thumbnail
+        - title
+        - created_at
+        - published_at
+        - updated_at
+      filter: {}
+update_permissions:
+  - role: public
+    permission:
+      columns:
+        - id
+        - details_metadata
+        - metadata
+        - company_name
+        - data_source
+        - description
+        - external_id
+        - location
+        - post_source
+        - thumbnail
+        - title
+        - created_at
+        - published_at
+        - updated_at
+      filter: {}
+      check: {}

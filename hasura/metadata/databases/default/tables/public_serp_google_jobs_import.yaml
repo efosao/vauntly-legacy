@@ -1,0 +1,74 @@
+table:
+  schema: public
+  name: serp_google_jobs_import
+insert_permissions:
+  - role: public
+    permission:
+      check: {}
+      columns:
+        - id
+        - external_id
+        - q
+        - raw_data
+        - start_index
+        - jobs_count
+        - detail_records
+        - details_complete
+        - date_created
+        - date_imported
+        - date_updated
+      backend_only: false
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - details_complete
+        - id
+        - jobs_count
+        - start_index
+        - detail_records
+        - raw_data
+        - external_id
+        - q
+        - date_created
+        - date_imported
+        - date_updated
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - details_complete
+        - id
+        - jobs_count
+        - start_index
+        - detail_records
+        - raw_data
+        - external_id
+        - q
+        - date_created
+        - date_imported
+        - date_updated
+      filter: {}
+      allow_aggregations: true
+update_permissions:
+  - role: public
+    permission:
+      columns:
+        - details_complete
+        - id
+        - jobs_count
+        - start_index
+        - detail_records
+        - raw_data
+        - external_id
+        - q
+        - date_created
+        - date_imported
+        - date_updated
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: public
+    permission:
+      filter: {}

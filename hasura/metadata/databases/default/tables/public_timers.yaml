@@ -1,0 +1,55 @@
+table:
+  schema: public
+  name: timers
+configuration:
+  custom_root_fields:
+    insert: AddTimers
+    select_aggregate: TimerAggregate
+    insert_one: AddTimer
+    select_by_pk: Timer
+    select: Timers
+    delete: DeleteTimers
+    update: UpdateTimers
+    delete_by_pk: DeleteTimer
+    update_by_pk: UpdateTimer
+  column_config: {}
+  custom_column_names: {}
+insert_permissions:
+  - role: public
+    permission:
+      check: {}
+      columns:
+        - enabled
+        - name
+        - updateDate
+        - createDate
+        - targetDate
+        - id
+      backend_only: false
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - enabled
+        - name
+        - updateDate
+        - createDate
+        - targetDate
+        - id
+      filter: {}
+update_permissions:
+  - role: public
+    permission:
+      columns:
+        - enabled
+        - name
+        - updateDate
+        - createDate
+        - targetDate
+        - id
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: public
+    permission:
+      filter: {}

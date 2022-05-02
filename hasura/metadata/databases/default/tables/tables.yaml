@@ -1,0 +1,6 @@
+- "!include public_job.yaml"
+- "!include public_log.yaml"
+- "!include public_posts.yaml"
+- "!include public_serp_google_jobs_import.yaml"
+- "!include public_timers.yaml"
+- "!include public_user.yaml"

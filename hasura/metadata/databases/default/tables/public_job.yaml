@@ -1,0 +1,55 @@
+table:
+  schema: public
+  name: job
+configuration:
+  custom_root_fields:
+    insert: AddJobs
+    select_aggregate: JobAggeregate
+    insert_one: AddJob
+    select_by_pk: Job
+    select: Jobs
+    delete: DeleteJobs
+    update: UpdateJobs
+    delete_by_pk: DeleteJob
+    update_by_pk: UpdateJob
+  column_config: {}
+  custom_column_names: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      foreign_key_constraint_on: posted_by
+  - name: updatedByUser
+    using:
+      foreign_key_constraint_on: updated_by
+insert_permissions:
+  - role: public
+    permission:
+      check: {}
+      columns:
+        - id
+        - title
+        - description
+        - external_link
+        - external_source
+        - date_created
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - id
+        - title
+        - description
+        - external_link
+        - external_source
+        - date_created
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - date_created
+        - id
+        - description
+        - external_link
+        - external_source
+        - title
+      filter: {}
