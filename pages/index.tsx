@@ -8,7 +8,8 @@ import Results from "../components/results";
 
 import useSWR, { SWRConfig } from "swr";
 
-const url = `http://localhost:8080/v1/graphql`;
+const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
+console.log({ url });
 const fetcher = (query: string) => request(url, query);
 const getPostsQuery = `query GetPostsQuery {
   posts {
