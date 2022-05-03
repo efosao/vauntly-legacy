@@ -38,7 +38,9 @@ export async function getStaticProps() {
 }
 
 const Home: NextPage = ({ fallback }: any) => {
-  const { data, error } = useSWR(getPostsQuery, fetcher);
+  const { data, error } = useSWR(getPostsQuery, fetcher, {
+    fallback,
+  });
   if (error) console.log({ error });
 
   const posts: [any] = data?.posts ?? [];
