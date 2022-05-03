@@ -3,7 +3,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import useSWR, { SWRConfig } from "swr";
 
-import styles from "../styles/Home.module.css";
 import Header from "../components/header";
 import Results from "../components/results";
 
@@ -47,28 +46,30 @@ const Home: NextPage = ({ fallback }: any) => {
 
   return (
     <SWRConfig value={fallback}>
-      <div className="bg-slate-100 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         <Head>
           <title>FreshPosts</title>
         </Head>
-        <main className={styles.main}>
-          <Header />
+        <main>
+          <div className="bg-white p-4">
+            <Header />
 
-          <article className="prose lg:prose-2xl px-2 my-4 mx-0 w-full max-w-full">
-            <h1>The freshest job postings in the industry.</h1>
-            <div className="flex justify-center bg-pink-200 px-4 w-full rounded-md">
-              <p>Discover your next job today</p>
-              <input
-                className="rounded-lg m-4 border-2"
-                placeholder="React Engineer"
-                type="text"
-              />
-            </div>
-          </article>
-
-          <div className="px-2 sm:px-4">
-            <Results posts={posts} />
+            <article className="prose lg:prose-2xl bg-white px-2 my-4 mx-auto w-full">
+              <h1>The freshest job postings in the industry.</h1>
+              <div className="flex flex-col items-center justify-center bg-pink-200 px-4 py-2 w-full rounded-md md:flex-row">
+                <p className="m-2 font-bold">Discover your next job today</p>
+                <input
+                  className="rounded-lg m-4 border-2"
+                  placeholder="React Engineer"
+                  type="text"
+                />
+              </div>
+            </article>
           </div>
+
+          <section className="px-2 sm:px-4 max-w-screen-lg mx-auto">
+            <Results posts={posts} />
+          </section>
         </main>
       </div>
     </SWRConfig>
