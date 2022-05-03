@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SearchRow } from "./search-row";
 
 export default function Results({ posts }: any) {
@@ -11,6 +10,7 @@ export default function Results({ posts }: any) {
           <SearchRow
             color={color}
             company={p.company_name}
+            createdAt={p.created_at}
             description={p.description}
             id={p.id}
             key={p.id}

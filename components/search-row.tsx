@@ -3,11 +3,13 @@ import initialism from "initialism";
 import Image from "next/image";
 import { useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import ReactTimeAgo from "react-time-ago";
 
 type SearchRowType = {
   id: number;
   color: string;
   company: string;
+  createdAt: string;
   description: string;
   thumbnail: string | null | undefined;
   title: string | null | undefined;
@@ -16,6 +18,7 @@ type SearchRowType = {
 export function SearchRow({
   color,
   company,
+  createdAt,
   description,
   thumbnail,
   title,
@@ -102,6 +105,13 @@ export function SearchRow({
           <button type="button" onClick={apply} className="row-tag">
             RUST
           </button>
+        </div>
+        <div>
+          <ReactTimeAgo
+            date={Date.parse(createdAt)}
+            timeStyle="mini"
+            locale="en-US"
+          />
         </div>
         <button onClick={selectTagHandler} className={buttonClasses}>
           <span className="px-8 py-2">Apply</span>
