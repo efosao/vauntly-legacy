@@ -29,7 +29,7 @@ export function SearchRow({
     { "hover:bg-yellow-300": color === "yellow" }
   );
   const buttonClasses = cx(
-    "bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent font-medium transition-all duration-300 hidden md:flex md:opacity-0 md:group-hover:flex md:group-hover:opacity-100",
+    "bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent font-medium transition-all duration-300 hidden md:flex md:opacity-0 md:group-hover:flex md:group-hover:opacity-100 font-bold",
     { "bg-yellow-600": color === "yellow" },
     { "hover:bg-yellow-700": color === "yellow" }
   );
