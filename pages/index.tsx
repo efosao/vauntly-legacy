@@ -53,6 +53,16 @@ const Home: NextPage = ({ fallback }: any) => {
           <meta name="description" content={SITE_DESCRIPTION} />
           <meta name="robots" content="noindex" />
           <link rel="icon" href="/favicon.ico" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800&display=swap"
+            rel="stylesheet"
+          />
         </Head>
 
         <main className={styles.main}>

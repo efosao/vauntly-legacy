@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .tag-container {
   @apply flex flex-wrap items-center overflow-hidden h-[5rem];
 }
 .row-tag {
-  @apply text-sm bg-white border-2 border-black rounded-xl px-4 py-1 m-1 uppercase font-medium cursor-pointer hidden md:flex;
+  @apply text-sm border-2 border-black rounded-xl px-4 py-1 m-1 uppercase font-bold cursor-pointer hidden md:flex;
 }
 
 .details ul {
