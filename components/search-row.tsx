@@ -26,7 +26,7 @@ export function SearchRow({
     { "hover:bg-yellow-300": color === "yellow" }
   );
   const buttonClasses = cx(
-    "opacity-0 group-hover:opacity-100 bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent font-medium transition-all duration-300",
+    "bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent font-medium transition-all duration-300 hidden md:flex md:opacity-0 md:group-hover:flex md:group-hover:opacity-100",
     { "bg-yellow-600": color === "yellow" },
     { "hover:bg-yellow-700": color === "yellow" }
   );
@@ -63,6 +63,9 @@ export function SearchRow({
     e.stopPropagation();
   }
 
+  const companyWordCount = company.split(" ").length;
+  const initialsLength = Math.min(companyWordCount, 3);
+
   return (
     <div className="relative" onBlurCapture={hideDetails}>
       <a ref={anchorRef} className="absolute -top-4" />
@@ -77,14 +80,17 @@ export function SearchRow({
               height={45}
             />
           ) : (
-            <span className="flex justify-center items-center rounded-full bg-white w-[45px] h-[45px]">
-              {initialism(company.replaceAll("&", "").replaceAll("/", ""), 4)}
+            <span className="flex font-extrabold text-slate-400 border-slate-400 border-2 justify-center items-center rounded-full bg-white w-[45px] h-[45px]">
+              {initialism(
+                company.replaceAll("&", "").replaceAll("/", ""),
+                initialsLength
+              )}
             </span>
           )}
         </span>
         <div className="flex flex-col grow p-1 overflow-hidden">
           <p>{company}</p>
-          <p className="font-medium truncate">{title}</p>
+          <p className="font-extrabold w-full md:w-72 lg:w-96">{title}</p>
         </div>
         <div className="tag-container">
           <button type="button" onClick={apply} className="row-tag">
@@ -103,7 +109,7 @@ export function SearchRow({
       </div>
       <div
         ref={detailsRef}
-        className="bg-indigo-100 p-4 hidden details rounded -mt-6"
+        className="bg-white p-4 hidden details rounded -mt-6"
       >
         <article className="prose-sm lg:prose-xl">
           <h2>{company} is hiring a</h2>

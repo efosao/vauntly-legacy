@@ -47,7 +47,7 @@ const Home: NextPage = ({ fallback }: any) => {
 
   return (
     <SWRConfig value={fallback}>
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="bg-slate-100 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <Head>
           <title>FreshPosts</title>
           <meta name="description" content={SITE_DESCRIPTION} />
@@ -68,9 +68,9 @@ const Home: NextPage = ({ fallback }: any) => {
         <main className={styles.main}>
           <Header />
 
-          <article className="prose lg:prose-2xl px-4 mx-0 w-full max-w-full">
+          <article className="prose lg:prose-2xl px-2 my-4 mx-0 w-full max-w-full">
             <h1>The freshest job postings in the industry.</h1>
-            <div className="flex justify-center bg-pink-200 w-full rounded-md">
+            <div className="flex justify-center bg-pink-200 px-4 w-full rounded-md">
               <p>Discover your next job today</p>
               <input
                 className="rounded-lg m-4 border-2"
@@ -80,10 +80,8 @@ const Home: NextPage = ({ fallback }: any) => {
             </div>
           </article>
 
-          <div className="px-4 py-6 sm:px-0">
-            <div className="m-4 anchor">
-              <Results posts={posts} />
-            </div>
+          <div className="px-2 sm:px-4">
+            <Results posts={posts} />
           </div>
         </main>
       </div>
