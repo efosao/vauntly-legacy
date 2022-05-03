@@ -9,6 +9,9 @@
     "lint": "next lint",
     "import": "node ./src/import.mjs"
   },
+  "engines": {
+    "node": "16.4"
+  },
   "dependencies": {
     "@headlessui/react": "^1.6.0",
     "@heroicons/react": "^1.0.6",
