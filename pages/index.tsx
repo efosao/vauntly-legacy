@@ -1,12 +1,11 @@
 import { request } from "graphql-request";
 import type { NextPage } from "next";
 import Head from "next/head";
+import useSWR, { SWRConfig } from "swr";
 
 import styles from "../styles/Home.module.css";
 import Header from "../components/header";
 import Results from "../components/results";
-
-import useSWR, { SWRConfig } from "swr";
 
 const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
 const fetcher = (query: string) => request(url, query);
@@ -43,28 +42,13 @@ const Home: NextPage = ({ fallback }: any) => {
   if (error) console.log({ error });
 
   const posts: [any] = data?.posts ?? [];
-  const SITE_DESCRIPTION: string = `The freshest job postings in the industry.`;
 
   return (
     <SWRConfig value={fallback}>
       <div className="bg-slate-100 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <Head>
           <title>FreshPosts</title>
-          <meta name="description" content={SITE_DESCRIPTION} />
-          <meta name="robots" content="noindex" />
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="anonymous"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800&display=swap"
-            rel="stylesheet"
-          />
         </Head>
-
         <main className={styles.main}>
           <Header />
 
