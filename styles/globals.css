@@ -21,3 +21,10 @@ html {
 .details p {
   white-space: pre-wrap;
 }
+
+.button {
+  @apply bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent transition-all duration-300 md:flex md:group-hover:flex md:group-hover:opacity-100 font-bold px-6 py-1 m-1;
+}
+.label {
+  @apply bg-pink-100 text-black rounded-xl inline-flex items-center justify-center font-bold px-2 py-1 m-1;
+}
