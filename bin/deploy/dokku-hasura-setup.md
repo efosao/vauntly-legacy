@@ -45,7 +45,7 @@ dokku domains:add frontposts dev.frontposts.com
 dokku config:set frontposts \
 NEXT_PUBLIC_GQL_HOST="https://gql.frontposts.com" \
 PG_DATABASE_URL="postgres://postgres:5005227a52c02361b7e95a1f5acfc7f0@efosa.me:44553/jobs_db" \
-NEXTAUTH_URL="https://frontposts.com" \
+NEXTAUTH_URL="https://dev.frontposts.com" \
 NEXTAUTH_SECRET="LlKq6ZtYbr+hTC073mAmAh9/h2HwMfsFo4hrfCx5mLg=" \
 EMAIL_SERVER="smtp://efosao@gmail.com:frbxbjaompqgrwuv@smtp.gmail.com:587" \
 EMAIL_FROM="efosao@gmail.com"
