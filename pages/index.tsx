@@ -6,12 +6,11 @@ import useSWR, { SWRConfig } from "swr";
 
 import Header from "../components/header";
 import Results from "../components/results";
-import Login from "../components/login";
 
 const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
 const fetcher = (query: string) => request(url, query);
 const getPostsQuery = `query GetPostsQuery {
-  posts(limit: 20) {
+  posts(limit: 30) {
     id
     location
     thumbnail
@@ -53,7 +52,7 @@ const Home: NextPage = ({ fallback }: any) => {
           <title>FrontPosts</title>
         </Head>
         <main>
-          <div className="bg-white p-4">
+          <div className="bg-white">
             <Header />
 
             <article className="prose lg:prose-2xl bg-white px-2 my-4 mx-auto w-full">
@@ -67,18 +66,6 @@ const Home: NextPage = ({ fallback }: any) => {
                 />
               </div>
             </article>
-            <Login />
-            <p>
-              <Link href="/secured">
-                <a>
-                  visit a{" "}
-                  <span className="underline underline-offset-1 text-cyan-500">
-                    secured
-                  </span>{" "}
-                  page
-                </a>
-              </Link>
-            </p>
           </div>
 
           <section className="px-2 sm:px-4 max-w-screen-lg mx-auto">
