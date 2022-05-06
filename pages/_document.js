@@ -10,7 +10,7 @@ class MyDocument extends Document {
           <meta name="description" content={SITE_DESCRIPTION} />
           <meta name="robots" content="noindex" />
           <link rel="icon" href="/favicon.ico" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"
@@ -19,7 +19,7 @@ class MyDocument extends Document {
           <link
             href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800&display=swap"
             rel="stylesheet"
-          />
+          /> */}
         </Head>
         <body className="bg-slate-100">
           <Main />
