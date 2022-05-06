@@ -70,9 +70,9 @@ export function SearchRow({
   const initialsLength = Math.min(companyWordCount, 3);
 
   return (
-    <div className="relative" onBlurCapture={hideDetails}>
+    <div className="relative" onBlurCapture={hideDetails} onClick={onRowSelect}>
       <a ref={anchorRef} className="absolute -top-4" />
-      <div className={containerClasses} onClick={onRowSelect}>
+      <div className={containerClasses}>
         <span className="shrink-0 w-15 flex align-center">
           {thumbnail ? (
             <Image
