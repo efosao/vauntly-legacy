@@ -1,9 +1,10 @@
 import cx from "classnames";
 import initialism from "initialism";
 import Image from "next/image";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import ReactTimeAgo from "react-time-ago";
+import debounce from "lodash.debounce";
 
 type SearchRowType = {
   id: number;
@@ -16,6 +17,7 @@ type SearchRowType = {
 };
 
 export function SearchRow({
+  id,
   color,
   company,
   createdAt,
@@ -36,6 +38,7 @@ export function SearchRow({
 
   const anchorRef = useRef<any>();
   const detailsRef = useRef<any>();
+  const containerRef = useRef<any>();
 
   function onRowSelect() {
     const elem = detailsRef.current;
@@ -46,6 +49,7 @@ export function SearchRow({
         anchorRef.current.scrollIntoView({
           behavior: "smooth",
         });
+        containerRef.current.classList.toggle("rounded-b-none");
       } else {
         elems[i].classList.add("hidden");
       }
@@ -69,10 +73,20 @@ export function SearchRow({
   const companyWordCount = company.split(" ").length;
   const initialsLength = Math.min(companyWordCount, 3);
 
+  const debouncedEventHandler = useMemo(
+    () => debounce(onRowSelect, 100, {}),
+    [id]
+  );
+
   return (
-    <div className="relative" onBlurCapture={hideDetails} onClick={onRowSelect}>
+    <div
+      className="relative"
+      onBlurCapture={hideDetails}
+      onClick={debouncedEventHandler}
+      onTouchEndCapture={debouncedEventHandler}
+    >
       <a ref={anchorRef} className="absolute -top-4" />
-      <div className={containerClasses}>
+      <div ref={containerRef} className={containerClasses}>
         <span className="shrink-0 w-15 flex align-center">
           {thumbnail ? (
             <Image
@@ -119,7 +133,7 @@ export function SearchRow({
       </div>
       <div
         ref={detailsRef}
-        className="bg-white p-4 hidden details rounded -mt-6"
+        className="bg-white p-4 hidden details rounded-b -mt-4"
       >
         <article className="prose-sm lg:prose-xl">
           <h2>{company} is hiring a</h2>
