@@ -1,4 +1,3 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import TimeAgo from "javascript-time-ago";
 import { SessionProvider, useSession } from "next-auth/react";
@@ -7,13 +6,19 @@ import en from "javascript-time-ago/locale/en.json";
 import { NextPage } from "next/types";
 import { ReactElement, ReactNode } from "react";
 
+import "../styles/globals.css";
+import { MainLayout, DefaultLayout } from "../components/layouts";
+
 type NextPageWithLayout = NextPage & {
   auth: boolean | {};
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
+  Component: NextPageWithLayout & {
+    title: string | undefined;
+    layout: (({ children }: { children: any }) => JSX.Element) | undefined;
+  };
 };
 
 TimeAgo.setDefaultLocale(en.locale);
@@ -23,20 +28,21 @@ function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
-  // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout ?? ((page) => page);
-
+  const { title } = Component;
+  const Layout = Component.layout || DefaultLayout;
   return (
     <SessionProvider session={session}>
-      {getLayout(
-        Component.auth ? (
-          <Auth isAdmin={pageProps.isAdmin || false}>
+      <MainLayout title={title}>
+        <Layout>
+          {Component.auth ? (
+            <Auth isAdmin={pageProps.isAdmin || false}>
+              <Component {...pageProps} />
+            </Auth>
+          ) : (
             <Component {...pageProps} />
-          </Auth>
-        ) : (
-          <Component {...pageProps} />
-        )
-      )}
+          )}
+        </Layout>
+      </MainLayout>
     </SessionProvider>
   );
 }

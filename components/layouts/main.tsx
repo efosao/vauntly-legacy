@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { ReactNode } from "react";
-import Header from "./header";
+
+import Header from "../header";
 
 interface PageProps {
   children: ReactNode;
@@ -9,10 +10,10 @@ interface PageProps {
 
 const DEFAULT_TITLE = `FrontPosts`;
 
-export default function Layout({ children, title }: PageProps) {
+export function MainLayout({ children, title }: PageProps) {
   const displayTitle = title ? `${title} | ${DEFAULT_TITLE}` : DEFAULT_TITLE;
   return (
-    <div className="max-w-7xl mx-auto">
+    <>
       <Head>
         <title>{displayTitle}</title>
       </Head>
@@ -20,6 +21,6 @@ export default function Layout({ children, title }: PageProps) {
         <Header />
         {children}
       </main>
-    </div>
+    </>
   );
 }

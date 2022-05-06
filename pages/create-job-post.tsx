@@ -1,4 +1,4 @@
-import Layout from "../components/layout";
+import { SimpleLayout } from "../components/layouts";
 
 export default function Page() {
   return (
@@ -8,6 +8,5 @@ export default function Page() {
   );
 }
 
-Page.getLayout = function getLayout(page) {
-  return <Layout title="Create a Job Post">{page}</Layout>;
-};
+Page.layout = SimpleLayout;
+Page.title = "Create a Job Post";
