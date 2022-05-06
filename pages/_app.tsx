@@ -4,29 +4,38 @@ import TimeAgo from "javascript-time-ago";
 import { SessionProvider, useSession } from "next-auth/react";
 
 import en from "javascript-time-ago/locale/en.json";
-import { NextComponentType, NextPageContext } from "next/types";
+import { NextPage } from "next/types";
+import { ReactElement, ReactNode } from "react";
+
+type NextPageWithLayout = NextPage & {
+  auth: boolean | {};
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
 
 TimeAgo.setDefaultLocale(en.locale);
 TimeAgo.addDefaultLocale(en);
 
-interface AuthAppProps extends AppProps {
-  Component: NextComponentType<NextPageContext, any, {}> & {
-    auth: boolean | {};
-  };
-}
-
 function MyApp({
   Component,
   pageProps: { session, ...pageProps },
-}: AuthAppProps) {
+}: AppPropsWithLayout) {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <SessionProvider session={session}>
-      {Component.auth ? (
-        <Auth isAdmin={pageProps.isAdmin || false}>
+      {getLayout(
+        Component.auth ? (
+          <Auth isAdmin={pageProps.isAdmin || false}>
+            <Component {...pageProps} />
+          </Auth>
+        ) : (
           <Component {...pageProps} />
-        </Auth>
-      ) : (
-        <Component {...pageProps} />
+        )
       )}
     </SessionProvider>
   );

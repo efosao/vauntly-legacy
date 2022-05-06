@@ -1,11 +1,8 @@
 import { request } from "graphql-request";
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import useSWR, { SWRConfig } from "swr";
 
-import Header from "../components/header";
 import Results from "../components/results";
+import Layout from "../components/layout";
 
 const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
 const fetcher = (query: string) => request(url, query);
@@ -32,49 +29,51 @@ export async function getStaticProps() {
     console.log({ error });
   }
 
-  const result = { props: { fallback } };
-
-  return result;
+  return { props: { fallback } };
 }
 
-const Home: NextPage = ({ fallback }: any) => {
+interface PageProps {
+  fallback:
+    | {
+        [key: string]: any;
+      }
+    | undefined;
+}
+
+export default function Page({ fallback }: PageProps) {
   const { data, error } = useSWR(getPostsQuery, fetcher, {
     fallback,
   });
+
   if (error) console.log({ error });
 
   const posts: [any] = data?.posts ?? [];
 
   return (
-    <SWRConfig value={fallback}>
-      <div className="max-w-7xl mx-auto">
-        <Head>
-          <title>FrontPosts</title>
-        </Head>
-        <main>
-          <div className="bg-white">
-            <Header />
+    <div>
+      <SWRConfig value={fallback}>
+        <div>
+          <article className="prose lg:prose-2xl bg-white p-4 my-4 rounded-md shadow-lg mx-auto w-full">
+            <h1>The freshest job postings in the industry.</h1>
+            <div className="flex flex-col items-center justify-center bg-pink-200 px-4 py-2 w-full rounded-md md:flex-row">
+              <p className="m-2 font-bold">Discover your next job today</p>
+              <input
+                className="rounded-lg m-4 border-2"
+                placeholder="React Engineer"
+                type="text"
+              />
+            </div>
+          </article>
+        </div>
 
-            <article className="prose lg:prose-2xl bg-white px-2 my-4 mx-auto w-full">
-              <h1>The freshest job postings in the industry.</h1>
-              <div className="flex flex-col items-center justify-center bg-pink-200 px-4 py-2 w-full rounded-md md:flex-row">
-                <p className="m-2 font-bold">Discover your next job today</p>
-                <input
-                  className="rounded-lg m-4 border-2"
-                  placeholder="React Engineer"
-                  type="text"
-                />
-              </div>
-            </article>
-          </div>
-
-          <section className="px-2 sm:px-4 max-w-screen-lg mx-auto">
-            <Results posts={posts} />
-          </section>
-        </main>
-      </div>
-    </SWRConfig>
+        <section className="px-2 sm:px-4 max-w-screen-lg mx-auto">
+          <Results posts={posts} />
+        </section>
+      </SWRConfig>
+    </div>
   );
-};
+}
 
-export default Home;
+Page.getLayout = function getLayout(page) {
+  return <Layout title="Fresh Job Posts">{page}</Layout>;
+};

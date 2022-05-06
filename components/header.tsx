@@ -105,14 +105,12 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#">
-              <span className="sr-only">Workflow</span>
-              <img
-                className="h-8 w-auto sm:h-10"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                alt=""
-              />
-            </a>
+            <Link href="/">
+              <a className="text-4xl font-extrabold">
+                <span className="sr-only">FrontPosts</span>
+                FrontPosts
+              </a>
+            </Link>
           </div>
           <div className="-mr-2 -my-2 md:hidden">
             <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -196,12 +194,11 @@ export default function Header() {
               )}
             </Popover>
 
-            <a
-              href="#"
-              className="text-base font-medium text-gray-500 hover:text-gray-900"
-            >
-              Pricing
-            </a>
+            <Link href="/create-job-post">
+              <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                Post a Job
+              </a>
+            </Link>
             <Link href="/secured">
               <a className="text-base font-medium text-gray-500 hover:text-gray-900">
                 Secured
@@ -334,11 +331,7 @@ export default function Header() {
             <div className="pt-5 pb-6 px-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="Workflow"
-                  />
+                  <span className="text-4xl font-bold">FrontPosts</span>
                 </div>
                 <div className="-mr-2">
                   <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -369,12 +362,11 @@ export default function Header() {
             </div>
             <div className="py-6 px-5 space-y-6">
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                <a
-                  href="#"
-                  className="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Pricing
-                </a>
+                <Link href="/create-job-post">
+                  <a className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Post a Job
+                  </a>
+                </Link>
 
                 <Link href="/secured">
                   <a className="text-base font-medium text-gray-900 hover:text-gray-700">
