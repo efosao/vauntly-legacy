@@ -26,7 +26,7 @@ export function SearchRow({
   title,
 }: SearchRowType) {
   const containerClasses = cx(
-    "group p-4 my-4 bg-indigo-200 flex items-center space-x-4 rounded-xl shadow-lg h-24 hover:bg-indigo-300 transition-all duration-300",
+    "group p-4 my-4 bg-indigo-200 flex items-center space-x-4 rounded-xl shadow-lg h-24 hover:bg-indigo-300 transition-all duration-200",
     { "bg-yellow-200": color === "yellow" },
     { "hover:bg-yellow-300": color === "yellow" }
   );
