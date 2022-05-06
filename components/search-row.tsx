@@ -79,14 +79,14 @@ export function SearchRow({
   );
 
   return (
-    <div
-      className="relative"
-      onBlurCapture={hideDetails}
-      onClick={debouncedEventHandler}
-      onTouchEndCapture={debouncedEventHandler}
-    >
+    <div className="relative" onBlurCapture={hideDetails}>
       <a ref={anchorRef} className="absolute -top-4" />
-      <div ref={containerRef} className={containerClasses}>
+      <div
+        ref={containerRef}
+        className={containerClasses}
+        onClick={debouncedEventHandler}
+        onTouchEndCapture={debouncedEventHandler}
+      >
         <span className="shrink-0 w-15 flex align-center">
           {thumbnail ? (
             <Image
