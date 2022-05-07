@@ -1,4 +1,6 @@
 import { useSession, signIn, signOut } from "next-auth/react";
+import { UserIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 // import axios from "axios";
 
 export default function Component() {
@@ -12,17 +14,20 @@ export default function Component() {
   function callSignIn() {
     signIn();
   }
-  function callSignOut() {
-    signOut();
-  }
 
   if (session) {
     return (
       <>
-        <span className="label">{session.user.email}</span>
-        <button className="button" onClick={callSignOut}>
-          Sign out
-        </button>
+        <Link href="/profile">
+          <span className="bg-white p-2 rounded-full border-2 border-gray-500">
+            <UserIcon
+              className="flex-shrink-0 h-6 w-6 text-gray-500"
+              aria-hidden="true"
+            />
+            {/* {session.user.email} */}
+          </span>
+        </Link>
+
         {/* <button className="button" onClick={getToken}>
           Get Token Data
         </button> */}
