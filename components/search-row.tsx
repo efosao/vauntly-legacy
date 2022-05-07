@@ -26,12 +26,12 @@ export function SearchRow({
   title,
 }: SearchRowType) {
   const containerClasses = cx(
-    "group p-4 my-4 bg-indigo-200 flex items-center space-x-4 rounded-xl shadow-lg h-24 hover:bg-indigo-300 transition-all duration-200",
+    "p-4 my-4 bg-indigo-200 flex items-center space-x-4 rounded-xl shadow-lg h-24 hover:bg-indigo-300 transition-all duration-200",
     { "bg-yellow-200": color === "yellow" },
     { "hover:bg-yellow-300": color === "yellow" }
   );
   const buttonClasses = cx(
-    "bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent font-medium transition-all duration-300 hidden md:flex md:opacity-0 md:group-hover:flex md:group-hover:opacity-100 font-bold",
+    "bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent font-medium transition-all duration-300 hidden sm:flex font-bold",
     { "bg-yellow-600": color === "yellow" },
     { "hover:bg-yellow-700": color === "yellow" }
   );
@@ -43,17 +43,21 @@ export function SearchRow({
   function onRowSelect() {
     const elem = detailsRef.current;
     const elems = document.getElementsByClassName("details");
+    let runLast = () => {};
     for (let i = 0; i < elems.length; i += 1) {
       if (elem === elems[i]) {
-        elems[i].classList.toggle("hidden");
-        anchorRef.current.scrollIntoView({
-          behavior: "smooth",
-        });
-        containerRef.current.classList.toggle("rounded-b-none");
+        runLast = () => {
+          elems[i].classList.toggle("hidden");
+          containerRef.current.classList.toggle("rounded-b-none");
+          anchorRef.current.scrollIntoView({
+            behavior: "smooth",
+          });
+        };
       } else {
         elems[i].classList.add("hidden");
       }
     }
+    runLast();
   }
 
   function hideDetails() {
@@ -73,19 +77,13 @@ export function SearchRow({
   const companyWordCount = company.split(" ").length;
   const initialsLength = Math.min(companyWordCount, 3);
 
-  const debouncedEventHandler = useMemo(
-    () => debounce(onRowSelect, 100, {}),
-    [id]
-  );
-
   return (
     <div className="relative" onBlurCapture={hideDetails}>
       <a ref={anchorRef} className="absolute -top-4" />
       <div
         ref={containerRef}
         className={containerClasses}
-        onClick={debouncedEventHandler}
-        onTouchEndCapture={debouncedEventHandler}
+        onClick={onRowSelect}
       >
         <span className="shrink-0 w-15 flex align-center">
           {thumbnail ? (
