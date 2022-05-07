@@ -65,7 +65,17 @@ export default function Page() {
 
         <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
           <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
-            Details
+            Design your Job Post
+          </span>
+          {/* <div className="flex flex-col p-4">
+          <label className="font-semibold uppercase">Description*</label>
+          <textarea className="rounded-md border-gray-300 shadow-md my-2"></textarea>
+        </div> */}
+        </section>
+
+        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
+          <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
+            Job Details
           </span>
           <div className="flex flex-col p-4">
             <label className="font-semibold uppercase">Description*</label>
@@ -75,12 +85,20 @@ export default function Page() {
 
         <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
           <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
+            Company
+          </span>
+        </section>
+
+        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
+          <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
+            Feedback
+          </span>
+        </section>
+
+        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
+          <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
             Preview
           </span>
-          {/* <div className="flex flex-col p-4">
-          <label className="font-semibold uppercase">Description*</label>
-          <textarea className="rounded-md border-gray-300 shadow-md my-2"></textarea>
-        </div> */}
         </section>
 
         <section className="bg-white fixed bottom-0 w-full p-4 -mx-6 border-t border-gray-200">
@@ -89,6 +107,7 @@ export default function Page() {
           </button>
         </section>
       </form>
+      <div className="h-20" />
     </div>
   );
 }
