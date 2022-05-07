@@ -1,4 +1,4 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { UserIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 // import axios from "axios";

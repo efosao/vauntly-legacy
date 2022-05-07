@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <div className="m-6">
       <form>
-        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10">
+        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
           <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
             Let&apos;s Begin
           </span>
@@ -63,7 +63,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10">
+        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
           <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
             Details
           </span>
@@ -73,7 +73,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10">
+        <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
           <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
             Preview
           </span>
