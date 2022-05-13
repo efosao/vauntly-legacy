@@ -20,7 +20,7 @@ const getPostsQuery = `query GetPostsQuery {
 
 export async function getStaticProps() {
   // `getStaticProps` is executed on the server side.
-  let fallback = { [getPostsQuery]: undefined };
+  let fallback = { [getPostsQuery]: null };
   try {
     const posts = await request(url, getPostsQuery);
     fallback[getPostsQuery] = posts;
@@ -41,7 +41,7 @@ interface PageProps {
 
 export default function Page({ fallback }: PageProps) {
   const { data, error } = useSWR(getPostsQuery, fetcher, {
-    fallback,
+    fallback
   });
 
   if (error) console.log({ error });
