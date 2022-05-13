@@ -8,7 +8,7 @@ interface PageProps {
   title: string | undefined;
 }
 
-const DEFAULT_TITLE = `FrontPosts`;
+const DEFAULT_TITLE = `Vauntly`;
 
 export function MainLayout({ children, title }: PageProps) {
   const displayTitle = title ? `${title} | ${DEFAULT_TITLE}` : DEFAULT_TITLE;

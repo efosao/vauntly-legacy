@@ -1,13 +1,13 @@
 # Dokku Setup Scripts
 
-## GQL Frontposts API
+## GQL Vauntly API
 
 ```sh
-dokku apps:create gql.frontposts
+dokku apps:create gql.vauntly
 
-dokku domains:add gql.frontposts gql.frontposts.com
+dokku domains:add gql.vauntly gql.vauntly.com
 
-dokku config:set gql.frontposts \
+dokku config:set gql.vauntly \
 HASURA_GRAPHQL_DATABASE_URL="postgres://postgres:5005227a52c02361b7e95a1f5acfc7f0@efosa.me:44553/jobs_db" \
 HASURA_GRAPHQL_ENABLE_CONSOLE="false" \
 HASURA_GRAPHQL_METADATA_DATABASE_URL="postgres://postgres:5005227a52c02361b7e95a1f5acfc7f0@efosa.me:44553/jobs_db" \
@@ -19,36 +19,35 @@ HASURA_GRAPHQL_ADMIN_SECRET="aaa" \
 HASURA_GRAPHQL_UNAUTHORIZED_ROLE="public" \
 HASURA_GRAPHQL_JWT_SECRET="{ \"type\":\"RS256\", \"jwk_url\": \"https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com\", \"audience\": \"joblinkers\", \"issuer\": \"https://securetoken.google.com/joblinkers\" }"
 
-dokku proxy:ports-set gql.frontposts http:80:8080
+dokku proxy:ports-set gql.vauntly http:80:8080
 
 sudo docker pull hasura/graphql-engine:v2.6.0
 
-sudo docker tag hasura/graphql-engine:v2.6.0 dokku/gql.frontposts
+sudo docker tag hasura/graphql-engine:v2.6.0 dokku/gql.vauntly
 ```
 
-~~dokku tags:deploy gql.frontposts~~
+~~dokku tags:deploy gql.vauntly~~
 
 ```sh
-dokku git:from-image gql.frontposts dokku/gql.frontpo
-sts
+dokku git:from-image gql.vauntly dokku/gql.vauntly
 
-dokku letsencrypt gql.frontposts
+dokku letsencrypt gql.vauntly
 ```
 
-## Frontposts Website
+## Vauntly Website
 
 ```sh
-dokku apps:create frontposts
+dokku apps:create vauntly
 
-dokku domains:add frontposts dev.frontposts.com
+dokku domains:add vauntly stage.vauntly.com
 
-dokku config:set frontposts \
+dokku config:set vauntly \
 NEXT_PUBLIC_GQL_HOST="https://gql.frontposts.com" \
 PG_DATABASE_URL="postgres://postgres:5005227a52c02361b7e95a1f5acfc7f0@efosa.me:44553/jobs_db" \
-NEXTAUTH_URL="https://dev.frontposts.com" \
+NEXTAUTH_URL="https://stage.vauntly.com" \
 NEXTAUTH_SECRET="LlKq6ZtYbr+hTC073mAmAh9/h2HwMfsFo4hrfCx5mLg=" \
 EMAIL_SERVER="smtp://efosao@gmail.com:frbxbjaompqgrwuv@smtp.gmail.com:587" \
 EMAIL_FROM="efosao@gmail.com"
 
-dokku letsencrypt frontposts
+dokku letsencrypt vauntly
 ```
