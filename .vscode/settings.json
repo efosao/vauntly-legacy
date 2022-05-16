@@ -1,9 +1,24 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "bysabi.prettier-vscode-standard",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "emmet.triggerExpansionOnTab": true,
   "[typescriptreact]": {
     "editor.defaultFormatter": "bysabi.prettier-vscode-standard"
+  },
+  "[properties]": {
+    "editor.defaultFormatter": "remimarsal.prettier-now"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "remimarsal.prettier-now"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "remimarsal.prettier-now"
+  },
+  "[ignore]": {
+    "editor.defaultFormatter": "remimarsal.prettier-now"
   }
 }
