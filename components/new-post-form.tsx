@@ -117,19 +117,77 @@ export default function NewPostForm() {
               <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
                 Design your Job Post
               </span>
+              <div className="flex flex-col items-start">
+                <label className="label">
+                  <Field name="show_logo" type="checkbox" component="input">
+                    {(props) => (
+                      <input className="p-4 mr-4 rounded-md" {...props.input} />
+                    )}
+                  </Field>
+                  Show company logo besides post{" "}
+                  <span className="text-gray-400 ml-2">(+$25)</span>
+                </label>
+                <label className="label">
+                  <Field name="pin_duration_in_days" type="radio" value="1">
+                    {(props) => (
+                      <input
+                        className="form-checkbox p-4 mr-4 rounded-md"
+                        {...props.input}
+                      />
+                    )}
+                  </Field>
+                  Stick post to top of the frontpage for 24 hours{" "}
+                  <span className="text-gray-400 ml-2">(+$100)</span>
+                </label>
+                <label className="label">
+                  <Field name="pin_duration_in_days" type="radio" value="7">
+                    {(props) => (
+                      <input
+                        className="form-checkbox p-4 mr-4 rounded-md"
+                        {...props.input}
+                      />
+                    )}
+                  </Field>
+                  Stick post to top of the frontpage for 1 week{" "}
+                  <span className="text-gray-400 ml-2">(+$200)</span>
+                </label>
+                <label className="label">
+                  <Field name="pin_duration_in_days" type="radio" value="31">
+                    {(props) => (
+                      <input
+                        className="form-checkbox p-4 mr-4 rounded-md"
+                        {...props.input}
+                      />
+                    )}
+                  </Field>
+                  Stick post to top of the frontpage for 1 month{" "}
+                  <span className="text-gray-400 ml-2">(+$450)</span>
+                </label>
+                <label className="label">
+                  <Field name="pin_duration_in_days" type="radio" value="0">
+                    {(props) => (
+                      <input
+                        className="form-checkbox p-4 mr-4 rounded-md"
+                        {...props.input}
+                      />
+                    )}
+                  </Field>
+                  Do not pin post
+                </label>
+              </div>
             </section>
 
             <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
               <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
-                Job Details
+                Description
               </span>
-              <div className="flex flex-col p-4">
-                <label className="font-semibold uppercase">Description*</label>
+              <div className="flex flex-col p-2">
+                {/* <label className="font-semibold uppercase">Description*</label> */}
 
                 <Field name="description" component="textarea">
                   {(props) => (
                     <textarea
-                      className="rounded-md border-gray-300 shadow-md my-2 h-40"
+                      className="rounded-md border-gray-300 shadow-md h-40 mb-2"
                       type="text"
                       {...props.input}
                     />
@@ -138,23 +196,23 @@ export default function NewPostForm() {
               </div>
             </section>
 
-            <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
+            {/* <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
               <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
                 Company
               </span>
-            </section>
+            </section> */}
 
-            <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
+            {/* <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
               <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
                 Feedback
               </span>
-            </section>
+            </section> */}
 
-            <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
+            {/* <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
               <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
                 Preview
               </span>
-            </section>
+            </section> */}
 
             <div className="bg-blue-100 p-4 border rounded-md mb-10">
               <pre>{JSON.stringify({ formState }, null, 2)}</pre>
@@ -166,7 +224,7 @@ export default function NewPostForm() {
               className="bg-red-500 p-6 text-white font-extrabold text-2xl rounded-md w-full border-2 border-red-500 hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300"
               type="submit"
             >
-              Post Job
+              Post Job - $500
             </button>
           </section>
         </form>
