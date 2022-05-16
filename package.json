@@ -10,7 +10,7 @@
     "import": "node ./src/import.mjs"
   },
   "engines": {
-    "node": "16.14"
+    "node": ">=16.14 < 19"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.1",
