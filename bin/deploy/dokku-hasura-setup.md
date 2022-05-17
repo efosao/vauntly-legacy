@@ -45,7 +45,8 @@ dokku config:set vauntly \
 NEXT_PUBLIC_GQL_HOST="https://gql.frontposts.com" \
 PG_DATABASE_URL="postgres://postgres:5005227a52c02361b7e95a1f5acfc7f0@efosa.me:44553/jobs_db" \
 NEXTAUTH_URL="https://stage.vauntly.com" \
-NEXTAUTH_SECRET="LlKq6ZtYbr+hTC073mAmAh9/h2HwMfsFo4hrfCx5mLg=" \
+NEXTAUTH_SECRET="cbbe419b7f66fbe846e5584cb5ea3629" \
+ADMIN_EMAILS="efosao@gmail.com,efosao+33@gmail.com" \
 EMAIL_SERVER="smtp://efosao@gmail.com:frbxbjaompqgrwuv@smtp.gmail.com:587" \
 EMAIL_FROM="efosao@gmail.com"
 
