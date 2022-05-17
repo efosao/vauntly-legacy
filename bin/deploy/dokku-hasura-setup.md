@@ -17,7 +17,7 @@ HASURA_GRAPHQL_DEV_MODE="true" \
 HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log" \
 HASURA_GRAPHQL_ADMIN_SECRET="aaa" \
 HASURA_GRAPHQL_UNAUTHORIZED_ROLE="public" \
-HASURA_GRAPHQL_JWT_SECRET="{ \"type\":\"RS256\", \"jwk_url\": \"https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com\", \"audience\": \"joblinkers\", \"issuer\": \"https://securetoken.google.com/joblinkers\" }"
+HASURA_GRAPHQL_JWT_SECRET: "{ \"type\": \"HS256\", \"key\": \"cbbe419b7f66fbe846e5584cb5ea3629\" }"
 
 dokku proxy:ports-set gql.vauntly http:80:8080
 
