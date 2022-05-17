@@ -1,0 +1,115 @@
+// https://sequelize.org/master/manual/getting-started.html#connecting-to-a-database
+import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter";
+// import { User } from "@next-auth/sequelize-adapter/dist/models";
+import jwt from 'jsonwebtoken';
+import NextAuth from "next-auth";
+import EmailProvider from "next-auth/providers/email";
+// import { Sequelize, DataTypes, Op } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
+
+const dbUrl = process.env.PG_DATABASE_URL || '';
+const sequelize = new Sequelize(dbUrl, { logging: false });
+const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
+// sequelize.sync();
+
+// For more information on each option (and a full list of options) go to
+// https://next-auth.js.org/configuration/options
+export default NextAuth({
+  callbacks: {
+    async jwt(message) {
+      // Persist the OAuth access_token to the token right after signin
+      // only [token] has data on post-signin requests, [profile] is always empty
+      const { account, profile, token, user } = message;
+      let email = token.email;
+      let userId = user?.id || token.sub;
+
+      console.dir({ account, profile, token, user })
+
+      // if (!userId && email) {
+      //   console.log(`
+      //   ************************************
+      //     fetching user (${email}) from DB
+      //   ************************************
+      //   `)
+      //   const userDbRec: any = await sequelize.define('user', User).findOne({ where: { email: { [Op.eq] : token?.email}}});
+      //   userId = userDbRec?.id || '';
+      // }
+
+      if (userId) {
+        token.id = userId;
+        const adminEmails = (process.env.ADMIN_EMAILS || "").split(",");
+        token.isAdmin = adminEmails.includes(email || "");
+      }
+
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+
+      return token;
+    },
+    async session(sessionData) {
+      const { session, token } = sessionData;
+      // Send properties to the client, like an access_token from a provider.
+      const encodedToken = jwt.sign(token, NEXTAUTH_SECRET, { algorithm: 'HS256' });
+      session.isAdmin = token.isAdmin;
+      session.id = token.id;
+      session.token = encodedToken;
+      return session;
+    },
+  },
+  jwt: {
+    encode: async ({ secret, token, maxAge }) => {
+      // console.log({ token })
+      const jwtClaims = {
+        "sub": token?.id,
+        "name": token?.name,
+        "email": token?.email,
+        "iat": Date.now() / 1000,
+        "exp": Math.floor(Date.now() / 1000) + (24 * 60 * 60),
+        "https://hasura.io/jwt/claims": {
+          "x-hasura-allowed-roles": ["user"],
+          "x-hasura-default-role": "user",
+          "x-hasura-role": "user",
+          "x-hasura-user-id": token?.id,
+        }
+      };
+      const encodedToken = jwt.sign(jwtClaims, secret, { algorithm: 'HS256' });
+      return encodedToken;
+    },
+    decode: async ({ secret, token }) => {
+      const decodedToken = jwt.verify(token, secret, { algorithms: ['HS256'] });
+      return decodedToken;
+    },
+  },
+  events: {
+    async createUser({ user }) {
+      user.roles = ["user"];
+      // return user;
+    },
+  },
+  session: {
+    strategy: "jwt",
+  },
+  providers: [
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+    }),
+  ],
+  adapter: SequelizeAdapter(sequelize, {
+    models: {
+      User: sequelize.define("user", {
+        ...models.User,
+        phoneNumber: DataTypes.STRING,
+        roles: {
+          type: DataTypes.JSONB,
+          defaultValue: ["user"],
+        },
+      }),
+    },
+  }),
+  secret: NEXTAUTH_SECRET,
+  theme: {
+    colorScheme: "light",
+  },
+});

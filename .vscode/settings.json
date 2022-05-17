@@ -20,5 +20,6 @@
   },
   "[ignore]": {
     "editor.defaultFormatter": "remimarsal.prettier-now"
-  }
+  },
+  "editor.wordWrap": "on"
 }

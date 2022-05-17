@@ -28,6 +28,7 @@ services:
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: aaa
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public
+      HASURA_GRAPHQL_JWT_SECRET: "{ \"type\": \"HS256\", \"key\": \"cbbe419b7f66fbe846e5584cb5ea3629\" }"
 # volumes:
 #   db_data:
 
