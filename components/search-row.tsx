@@ -1,10 +1,9 @@
 import cx from "classnames";
 import initialism from "initialism";
 import Image from "next/image";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import ReactTimeAgo from "react-time-ago";
-import debounce from "lodash.debounce";
+import { formatDistance } from "date-fns";
 
 type SearchRowType = {
   id: number;
@@ -23,7 +22,7 @@ export function SearchRow({
   createdAt,
   description,
   thumbnail,
-  title,
+  title
 }: SearchRowType) {
   const containerClasses = cx(
     "p-4 my-4 bg-indigo-200 flex items-center space-x-4 rounded-xl shadow-lg h-24 hover:bg-indigo-300 transition-all duration-200",
@@ -50,7 +49,7 @@ export function SearchRow({
           elems[i].classList.toggle("hidden");
           containerRef.current.classList.toggle("rounded-b-none");
           anchorRef.current.scrollIntoView({
-            behavior: "smooth",
+            behavior: "smooth"
           });
         };
       } else {
@@ -119,11 +118,9 @@ export function SearchRow({
           </button>
         </div>
         <div>
-          <ReactTimeAgo
-            date={Date.parse(createdAt)}
-            timeStyle="mini"
-            locale="en-US"
-          />
+          {formatDistance(Date.parse(createdAt), new Date(), {
+            addSuffix: true
+          })}
         </div>
         <button onClick={selectTagHandler} className={buttonClasses}>
           <span className="px-8 py-2">Apply</span>
@@ -147,5 +144,5 @@ SearchRow.defaultProps = {
   color: "",
   company: "",
   description: "",
-  showDetail: false,
+  showDetail: false
 };
