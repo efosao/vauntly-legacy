@@ -1,19 +1,32 @@
-import { Field, Form } from "react-final-form";
 import { useEffect, useState } from "react";
+import { Field, Form } from "react-final-form";
 import store from "store2";
+import { v4 as uuidv4 } from "uuid";
 
 const DRAFT_POST_CACHE_KEY = "draft_post";
 
+type PostType = {
+  id: string | undefined;
+};
+
 export default function NewPostForm() {
-  const [formState, setFormState] = useState({});
-  function onSubmit(data = {}) {
+  const [formState, setFormState] = useState<PostType>();
+
+  function updateFormState(data: PostType) {
+    if (!data.id) {
+      data.id = uuidv4();
+    }
     setFormState(data);
+  }
+
+  function onSubmit(data: PostType) {
+    updateFormState(data);
     store(DRAFT_POST_CACHE_KEY, data);
   }
 
   useEffect(() => {
     const draftPostData = store(DRAFT_POST_CACHE_KEY) || {};
-    setFormState(draftPostData);
+    updateFormState(draftPostData);
   }, []);
 
   return (
@@ -27,7 +40,6 @@ export default function NewPostForm() {
               </span>
               <div className="flex flex-col p-4">
                 <label className="font-semibold uppercase">Company Name*</label>
-
                 <Field name="company_name" component="input">
                   {(props) => (
                     <input
@@ -40,7 +52,6 @@ export default function NewPostForm() {
                 </Field>
 
                 <label className="font-semibold uppercase">Position*</label>
-
                 <Field name="position" component="input">
                   {(props) => (
                     <input
@@ -70,7 +81,6 @@ export default function NewPostForm() {
                 </Field>
 
                 <label className="font-semibold uppercase">Primary Tag</label>
-
                 <Field name="tag_primary" component="select">
                   {(props) => (
                     <select
