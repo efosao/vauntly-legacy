@@ -225,7 +225,9 @@ export default function NewPostForm() {
             </section> */}
 
             <div className="bg-blue-100 p-4 border rounded-md mb-10">
-              <pre>{JSON.stringify({ formState }, null, 2)}</pre>
+              <pre className="whitespace-pre-wrap">
+                {JSON.stringify({ formState }, null, 2)}
+              </pre>
             </div>
           </div>
 
