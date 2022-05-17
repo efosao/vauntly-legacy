@@ -1,15 +1,14 @@
-import { SimpleLayout } from "../components/layouts";
 import { getSession, useSession, signOut } from "next-auth/react";
-
 import { request } from "graphql-request";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
+
+import { SimpleLayout } from "../components/layouts";
 
 export default function Page({ isAdmin }) {
   const { data: session }: any = useSession();
   const email = session?.user?.email;
-
-  console.log({ session, isAdmin });
+  const [userData, setUserData] = useState({});
 
   function callSignOut() {
     signOut();
@@ -38,7 +37,7 @@ export default function Page({ isAdmin }) {
           authorization: `Bearer ${token}`
         }
       );
-      console.log({ users });
+      setUserData(users);
     } catch (error) {
       console.log({ error });
     }
@@ -52,6 +51,9 @@ export default function Page({ isAdmin }) {
     <>
       <div>Email: {email}</div>
       <div>Is Admin?: {session.isAdmin ? "True" : "False"}</div>
+      <div className="m-4 border rounded p-4">
+        <pre>{JSON.stringify(userData, null, 4)}</pre>
+      </div>
       <button className="button" onClick={callSignOut}>
         Sign out
       </button>
