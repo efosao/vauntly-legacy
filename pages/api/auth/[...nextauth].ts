@@ -1,10 +1,7 @@
-// https://sequelize.org/master/manual/getting-started.html#connecting-to-a-database
 import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter";
-// import { User } from "@next-auth/sequelize-adapter/dist/models";
 import jwt from 'jsonwebtoken';
 import NextAuth from "next-auth";
 import EmailProvider from "next-auth/providers/email";
-// import { Sequelize, DataTypes, Op } from "sequelize";
 import { Sequelize, DataTypes } from "sequelize";
 
 const dbUrl = process.env.PG_DATABASE_URL || '';
@@ -18,22 +15,10 @@ export default NextAuth({
   callbacks: {
     async jwt(message) {
       // Persist the OAuth access_token to the token right after signin
-      // only [token] has data on post-signin requests, [profile] is always empty
+      // INFO: only [token] has data on post-signin requests, [profile] is always empty
       const { account, profile, token, user } = message;
       let email = token.email;
       let userId = user?.id || token.sub;
-
-      console.dir({ account, profile, token, user })
-
-      // if (!userId && email) {
-      //   console.log(`
-      //   ************************************
-      //     fetching user (${email}) from DB
-      //   ************************************
-      //   `)
-      //   const userDbRec: any = await sequelize.define('user', User).findOne({ where: { email: { [Op.eq] : token?.email}}});
-      //   userId = userDbRec?.id || '';
-      // }
 
       if (userId) {
         token.id = userId;
@@ -49,8 +34,8 @@ export default NextAuth({
     },
     async session(sessionData) {
       const { session, token } = sessionData;
-      // Send properties to the client, like an access_token from a provider.
       const encodedToken = jwt.sign(token, NEXTAUTH_SECRET, { algorithm: 'HS256' });
+      // Send properties to the client, like an access_token from a provider.
       session.isAdmin = token.isAdmin;
       session.id = token.id;
       session.token = encodedToken;
@@ -59,7 +44,6 @@ export default NextAuth({
   },
   jwt: {
     encode: async ({ secret, token, maxAge }) => {
-      // console.log({ token })
       const jwtClaims = {
         "sub": token?.id,
         "name": token?.name,
@@ -84,7 +68,6 @@ export default NextAuth({
   events: {
     async createUser({ user }) {
       user.roles = ["user"];
-      // return user;
     },
   },
   session: {
