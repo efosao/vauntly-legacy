@@ -5,7 +5,7 @@ const SITE_DESCRIPTION = `The freshest job postings in the industry.`;
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <meta name="description" content={SITE_DESCRIPTION} />
           <meta name="robots" content="noindex" />
