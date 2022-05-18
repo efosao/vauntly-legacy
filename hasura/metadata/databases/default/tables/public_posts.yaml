@@ -2,46 +2,44 @@ table:
   schema: public
   name: posts
 insert_permissions:
-  - role: public
+  - role: user
     permission:
-      check: {}
+      check:
+        created_by_user_id:
+          _eq: X-Hasura-User-Id
+      set:
+        state: PENDING
+        created_by_user_id: x-hasura-User-Id
       columns:
-        - id
-        - details_metadata
-        - metadata
         - company_name
         - data_source
         - description
-        - external_id
+        - details_metadata
         - location
-        - post_source
+        - metadata
         - thumbnail
         - title
-        - created_at
-        - published_at
-        - updated_at
       backend_only: false
 select_permissions:
   - role: public
     permission:
       columns:
-        - id
-        - details_metadata
-        - metadata
         - company_name
-        - data_source
+        - created_at
         - description
-        - external_id
+        - details_metadata
+        - id
         - location
+        - metadata
         - post_source
+        - published_at
+        - state
         - thumbnail
         - title
-        - created_at
-        - published_at
         - updated_at
       filter: {}
-update_permissions:
-  - role: public
+      limit: 50
+  - role: user
     permission:
       columns:
         - id
@@ -53,10 +51,32 @@ update_permissions:
         - external_id
         - location
         - post_source
+        - state
         - thumbnail
         - title
         - created_at
         - published_at
         - updated_at
-      filter: {}
-      check: {}
+        - created_by_user_id
+      filter:
+        _or:
+          - created_by_user_id:
+              _eq: X-Hasura-User-Id
+          - created_by_user_id:
+              _is_null: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - company_name
+        - description
+        - details_metadata
+        - location
+        - metadata
+        - thumbnail
+        - title
+        - updated_at
+      filter:
+        created_by_user_id:
+          _eq: X-Hasura-User-Id
+      check: null
