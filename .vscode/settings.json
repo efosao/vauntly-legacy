@@ -21,5 +21,8 @@
   "[ignore]": {
     "editor.defaultFormatter": "remimarsal.prettier-now"
   },
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

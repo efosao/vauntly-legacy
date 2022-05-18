@@ -1,7 +1,7 @@
-import { getSession, useSession, signOut } from "next-auth/react";
-import { request } from "graphql-request";
+import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
+import requestClient from "../lib/request-client";
 
 import { SimpleLayout } from "../components/layouts";
 
@@ -15,10 +15,6 @@ export default function Page({ isAdmin }) {
   }
 
   async function getUsers() {
-    const session: any = await getSession();
-    const { token } = session;
-
-    const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
     const getUsersQuery = `query GetUsers {
       users {
         id
@@ -29,14 +25,7 @@ export default function Page({ isAdmin }) {
     `;
 
     try {
-      const users = await request(
-        url,
-        getUsersQuery,
-        {},
-        {
-          authorization: `Bearer ${token}`
-        }
-      );
+      const users = await requestClient(getUsersQuery, {});
       setUserData(users);
     } catch (error) {
       console.log({ error });
