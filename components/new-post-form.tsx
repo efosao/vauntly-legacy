@@ -3,10 +3,16 @@ import { Field, Form } from "react-final-form";
 import store from "store2";
 import { v4 as uuidv4 } from "uuid";
 
+import requestClient from "../lib/request-client";
+import { SearchRow } from "./search-row";
+
 const DRAFT_POST_CACHE_KEY = "draft_post";
 
 type PostType = {
+  company_name: string;
+  description: string | undefined;
   id: string | undefined;
+  position: string | undefined;
 };
 
 export default function NewPostForm() {
@@ -19,9 +25,26 @@ export default function NewPostForm() {
     setFormState(data);
   }
 
-  function onSubmit(data: PostType) {
+  async function onSubmit(data: PostType) {
     updateFormState(data);
     store(DRAFT_POST_CACHE_KEY, data);
+
+    const results = await requestClient(
+      `mutation InsertPost($company_name: String, $description: String, $location: String, $title: String) {
+      insert_posts_one(object: {company_name: $company_name, description: $description, location: $location, thumbnail: "", title: $title}) {
+        external_id
+        created_by_user_id
+      }
+    }`,
+      {
+        company_name: data.company_name,
+        description: data.description,
+        location: "Philadelphia, PA",
+        title: data.position
+      }
+    );
+
+    console.log({ results });
   }
 
   useEffect(() => {
@@ -218,15 +241,25 @@ export default function NewPostForm() {
               </span>
             </section> */}
 
-            {/* <section className="relative bg-white border-gray-300 border p-4 rounded-md my-10 shadow">
+            <section className="relative bg-yellow-100 border-gray-300 border p-4 rounded-md my-10 shadow">
               <span className="relative -top-8 bg-white border-gray-300 border rounded px-2 py-1 mx-auto uppercase font-bold border-b-0">
-                Preview
+                Preview Post
               </span>
-            </section> */}
+              <div>
+                <SearchRow
+                  company={formState?.company_name}
+                  createdAt={new Date().toString()}
+                  description={formState?.description}
+                  id={0}
+                  thumbnail={null}
+                  title={formState?.position}
+                />
+              </div>
+            </section>
 
             <div className="bg-blue-100 p-4 border rounded-md mb-10">
               <pre className="whitespace-pre-wrap">
-                {JSON.stringify({ formState }, null, 2)}
+                {JSON.stringify(formState, null, 2)}
               </pre>
             </div>
           </div>

@@ -118,7 +118,7 @@ export function SearchRow({
           </button>
         </div>
         <div>
-          {formatDistance(Date.parse(createdAt), new Date(), {
+          {formatDistance(new Date(createdAt), new Date(), {
             addSuffix: true
           })}
         </div>
