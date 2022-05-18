@@ -33,6 +33,7 @@ specifiers:
   react: 18.1.0
   react-dom: 18.1.0
   react-final-form: ^6.5.9
+  react-infinite-scroll-component: ^6.1.0
   react-markdown: ^8.0.3
   remark: ^14.0.2
   remark-html: ^15.0.1
@@ -65,6 +66,7 @@ dependencies:
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-final-form: 6.5.9_bnxchjdfy45cdln7bu7hnhf37u
+  react-infinite-scroll-component: 6.1.0_react@18.1.0
   react-markdown: 8.0.3_ci6b7qrbzfuzg4ahcdqxg6om2y
   remark: 14.0.2
   remark-html: 15.0.1
@@ -2759,6 +2761,15 @@ packages:
       react: 18.1.0
     dev: false
 
+  /react-infinite-scroll-component/6.1.0_react@18.1.0:
+    resolution: {integrity: sha512-SQu5nCqy8DxQWpnUVLx7V7b7LcA37aM7tvoWjTLZp1dk6EJibM5/4EJKzOnl07/BsM1Y40sKLuqjCwwH/xV0TQ==}
+    peerDependencies:
+      react: '>=16.0.0'
+    dependencies:
+      react: 18.1.0
+      throttle-debounce: 2.3.0
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -3179,6 +3190,11 @@ packages:
   /text-table/0.2.0:
     resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
     dev: true
+
+  /throttle-debounce/2.3.0:
+    resolution: {integrity: sha512-H7oLPV0P7+jgvrk+6mwwwBDmxTaxnu9HMXmloNLXwnNO0ZxZ31Orah2n8lU1eMPvsaowP2CX+USCgyovXfdOFQ==}
+    engines: {node: '>=8'}
+    dev: false
 
   /to-regex-range/5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}

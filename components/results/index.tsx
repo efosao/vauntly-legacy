@@ -6,7 +6,7 @@ export default function Results({ posts }: any) {
     <div>
       {posts.length > 0 ? (
         posts.map((p: any) => {
-          const color = p.id < 15 ? "yellow" : "";
+          const color = new Set([116, 117, 112]).has(p.id) ? "yellow" : "";
 
           return (
             <SearchRow

@@ -1,22 +1,31 @@
 import { request } from "graphql-request";
+import { useEffect, useRef, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import useSWR, { SWRConfig } from "swr";
 
 import Results from "../components/results";
 
 const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
 const fetcher = (query: string) => request(url, query);
-const getPostsQuery = `query GetPostsQuery {
-  posts(limit: 30) {
-    id
-    location
-    thumbnail
-    title
-    description
-    company_name
-    created_at
-  }
+
+function genGetPostsQuery(pg: number = 0, size: number = 10): string {
+  return `query GetPostsQuery {
+    posts(limit: ${size}, offset: ${
+    pg * size
+  }, order_by: {id: desc}, where: {published_at: {_is_null: false}}) {
+      id
+      location
+      thumbnail
+      title
+      description
+      company_name
+      created_at
+      state
+    }
+  }`;
 }
-`;
+
+const getPostsQuery = genGetPostsQuery(0);
 
 export async function getStaticProps() {
   // `getStaticProps` is executed on the server side.
@@ -46,7 +55,35 @@ export default function Page({ fallback }: PageProps) {
 
   if (error) console.log({ error });
 
-  const posts: [any] = data?.posts ?? [];
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
+  const [posts, setPosts] = useState(data?.posts ?? []);
+  const postCount: number = posts.length;
+  const loaderRef = useRef(null);
+
+  async function fetchNextPage() {
+    const nextPosts = await request(url, genGetPostsQuery(page + 1));
+    setPage(page + 1);
+    setPosts(posts.concat(nextPosts.posts));
+    const hadResults = nextPosts.posts.length > 0;
+    setHasMore(hadResults);
+  }
+
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <=
+        (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+  useEffect(() => {
+    const isLoaderVisible = isInViewport(loaderRef.current);
+    if (isLoaderVisible) fetchNextPage();
+  }, []);
 
   return (
     <SWRConfig value={fallback}>
@@ -62,8 +99,30 @@ export default function Page({ fallback }: PageProps) {
         </div>
       </article>
 
-      <section className="px-2 sm:px-4 max-w-screen-lg mx-auto">
-        <Results posts={posts} />
+      <section className="flex px-2 sm:px-4 max-w-screen-lg mx-auto">
+        <InfiniteScroll
+          dataLength={postCount}
+          next={fetchNextPage}
+          hasMore={hasMore}
+          loader={<h4 ref={loaderRef}>Loading...</h4>}
+          endMessage={
+            <p className="m-4 p-4 flex justify-center text-3xl">🎉 🎉 🎉</p>
+          }
+          // below props only if you need pull down functionality
+          // refreshFunction={this.refresh}
+          // pullDownToRefresh
+          // pullDownToRefreshThreshold={50}
+          // pullDownToRefreshContent={
+          //   <h3 style={{ textAlign: "center" }}>
+          //     &#8595; Pull down to refresh
+          //   </h3>
+          // }
+          // releaseToRefreshContent={
+          //   <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
+          // }
+        >
+          <Results posts={posts} />
+        </InfiniteScroll>
       </section>
     </SWRConfig>
   );
