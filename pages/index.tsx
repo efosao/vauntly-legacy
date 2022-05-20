@@ -50,7 +50,8 @@ interface PageProps {
 
 export default function Page({ fallback }: PageProps) {
   const { data, error } = useSWR(getPostsQuery, fetcher, {
-    fallback
+    fallback,
+    revalidateOnMount: true
   });
 
   if (error) console.log({ error });
