@@ -1,5 +1,5 @@
 import { request } from "graphql-request";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useSWR, { SWRConfig } from "swr";
 
@@ -83,6 +83,7 @@ export default function Page({ fallback }: PageProps) {
   useEffect(() => {
     const isLoaderVisible = isInViewport(loaderRef.current);
     if (isLoaderVisible) fetchNextPage();
+    // eslint-disable-next-line
   }, []);
 
   return (
