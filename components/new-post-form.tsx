@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import store from "store2";
 import { v4 as uuidv4 } from "uuid";
+import dynamic from "next/dynamic";
 
 import requestClient from "../lib/request-client";
 import { SearchRow } from "./search-row";
+
+const DynamicEditor = dynamic(() => import("./editor"), { ssr: false });
 
 const DRAFT_POST_CACHE_KEY = "draft_post";
 
@@ -17,6 +20,12 @@ type PostType = {
 
 export default function NewPostForm() {
   const [formState, setFormState] = useState<PostType>();
+
+  const DynamicEditorAdapter = ({ input }) => {
+    return (
+      <DynamicEditor initialValue={input.value} onChange={input.onChange} />
+    );
+  };
 
   function updateFormState(data: PostType) {
     if (!data.id) {
@@ -215,17 +224,9 @@ export default function NewPostForm() {
                 Description
               </span>
               <div className="flex flex-col p-2">
-                {/* <label className="font-semibold uppercase">Description*</label> */}
+                <Field name="description" component={DynamicEditorAdapter} />
 
-                <Field name="description" component="textarea">
-                  {(props) => (
-                    <textarea
-                      className="rounded-md border-gray-300 shadow-md h-40 mb-2"
-                      type="text"
-                      {...props.input}
-                    />
-                  )}
-                </Field>
+                {/* <DynamicEditor initialValue={formState?.description} /> */}
               </div>
             </section>
 
