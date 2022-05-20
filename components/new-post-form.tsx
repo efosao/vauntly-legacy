@@ -265,7 +265,7 @@ export default function NewPostForm() {
             </div>
           </div>
 
-          <section className="bg-white fixed bottom-0 w-full p-4 -mx-6 border-t border-gray-200">
+          <section className="bg-white fixed bottom-0 w-full p-4 -mx-6 border-t border-gray-200 z-20">
             <button
               className="bg-red-500 p-6 text-white font-extrabold text-2xl rounded-md w-full border-2 border-red-500 hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300"
               type="submit"
