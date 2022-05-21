@@ -27,8 +27,7 @@ function genGetPostsQuery(pg: number = 0, size: number = 10): string {
 
 const getPostsQuery = genGetPostsQuery(0);
 
-export async function getStaticProps() {
-  // `getStaticProps` is executed on the server side.
+export async function getServerSideProps(ctx) {
   let fallback = { [getPostsQuery]: null };
   try {
     const posts = await request(url, getPostsQuery);
