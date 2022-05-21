@@ -22,13 +22,20 @@
   white-space: pre-wrap;
 }
 
+.details blockquote {
+  border-left: 4px #73a7cd solid;
+  background: #dce6f0;
+  font-weight: 500;
+  padding: 0.15em 0 0.15em 1em;
+}
+
 .button {
   @apply bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white inline-flex items-center justify-center border-transparent transition-all duration-300 hover:opacity-100 font-bold px-2 py-1 m-1;
 }
+
 .label {
   @apply text-black rounded-xl inline-flex items-center justify-center font-bold px-2 py-1 m-1;
 }
-
 
 .toastui-editor-contents p {
   font-size: 1.5em;
