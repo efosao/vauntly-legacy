@@ -3,6 +3,7 @@ import { Field, Form } from "react-final-form";
 import store from "store2";
 import { v4 as uuidv4 } from "uuid";
 import dynamic from "next/dynamic";
+import { signIn, useSession } from "next-auth/react";
 
 import requestClient from "../lib/request-client";
 import { SearchRow } from "./search-row";
@@ -20,6 +21,7 @@ type PostType = {
 
 export default function NewPostForm() {
   const [formState, setFormState] = useState<PostType>();
+  const { data: session } = useSession();
 
   const DynamicEditorAdapter = ({ input }) => {
     return (
@@ -35,8 +37,11 @@ export default function NewPostForm() {
   }
 
   async function onSubmit(data: PostType) {
-    updateFormState(data);
-    store(DRAFT_POST_CACHE_KEY, data);
+    const modifiedData = { ...data, saving: true };
+    updateFormState(modifiedData);
+    store(DRAFT_POST_CACHE_KEY, modifiedData);
+
+    if (!session) return signIn();
 
     const results = await requestClient(
       `mutation InsertPost($company_name: String, $description: String, $location: String, $title: String) {
@@ -60,6 +65,12 @@ export default function NewPostForm() {
     const draftPostData = store(DRAFT_POST_CACHE_KEY) || {};
     updateFormState(draftPostData);
   }, []);
+
+  useEffect(() => {
+    const draftPostData = store(DRAFT_POST_CACHE_KEY) || {};
+    if (!session && draftPostData.saving) return;
+    onSubmit(draftPostData);
+  }, [session]);
 
   return (
     <Form initialValues={formState} onSubmit={onSubmit}>
