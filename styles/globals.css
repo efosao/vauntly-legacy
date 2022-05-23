@@ -37,6 +37,19 @@
   @apply text-black rounded-xl inline-flex items-center justify-center font-bold px-2 py-1 m-1;
 }
 
-.toastui-editor-contents p {
-  font-size: 1.5em;
+div.toastui-editor-contents {
+  font-size: 1.25em;
+}
+
+form div.ProseMirror {
+  font-size: 1.25em;
+}
+
+.toastui-editor-mode-switch, .toastui-editor-mode-switch .tab-item {
+  height: 48px!important;
+}
+
+.toastui-editor-mode-switch .tab-item{
+  font-size: 1.25em;
+  padding: 10px;
 }
