@@ -11,7 +11,7 @@ export default function Page({ isAdmin }) {
   const [userData, setUserData] = useState({});
 
   function callSignOut() {
-    signOut();
+    window.location.href = "/logout";
   }
 
   async function getUsers() {
