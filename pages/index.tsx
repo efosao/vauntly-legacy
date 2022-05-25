@@ -69,7 +69,10 @@ export default function Page({ fallback }: PageProps) {
     setHasMore(hadResults);
   }
 
+  const memoizedFetchNextPage = useCallback(fetchNextPage, [page, posts]);
+
   function isInViewport(element) {
+    if (!element) return false;
     const rect = element.getBoundingClientRect();
     return (
       rect.top >= 0 &&
@@ -82,9 +85,8 @@ export default function Page({ fallback }: PageProps) {
 
   useEffect(() => {
     const isLoaderVisible = isInViewport(loaderRef.current);
-    if (isLoaderVisible) fetchNextPage();
-    // eslint-disable-next-line
-  }, []);
+    if (isLoaderVisible) memoizedFetchNextPage();
+  }, [memoizedFetchNextPage]);
 
   return (
     <SWRConfig value={fallback}>
