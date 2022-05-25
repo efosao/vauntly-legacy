@@ -1,6 +1,4 @@
 import NewFormPost from "../components/new-post-form";
-import { SimpleLayout } from "../components/layouts";
-
 export default function Page() {
   return (
     <div className="m-6">

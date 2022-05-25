@@ -1,4 +1,4 @@
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import requestClient from "../lib/request-client";
