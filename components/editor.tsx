@@ -12,16 +12,19 @@ export default function FormEditor({ initialValue, onChange }) {
     onChange(md);
   }
 
+  const DEFAULT_TEXT_TO_FIX_BUG = " ";
+
   return (
     <Editor
       height="600px"
       initialEditType="wysiwyg"
-      initialValue={initialValue}
+      initialValue={initialValue || DEFAULT_TEXT_TO_FIX_BUG}
       onChange={handleChange}
       previewStyle="vertical"
       ref={editorRef}
       usageStatistics={false}
       useCommandShortcut={true}
+      placeholder="Tell the job-seeker about the role"
     />
   );
 }
