@@ -1,10 +1,10 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@headlessui/react': ^1.6.1
+  '@headlessui/react': ^1.6.2
   '@heroicons/react': ^1.0.6
   '@next-auth/sequelize-adapter': ^1.0.2
-  '@tailwindcss/forms': ^0.5.1
+  '@tailwindcss/forms': ^0.5.2
   '@tailwindcss/line-clamp': ^0.4.0
   '@tailwindcss/typography': ^0.5.2
   '@toast-ui/react-editor': ^3.1.7
@@ -24,13 +24,13 @@ specifiers:
   graphql: ^16.5.0
   graphql-request: ^4.2.0
   initialism: ^1.0.4
-  javascript-time-ago: ^2.3.13
+  javascript-time-ago: ^2.5.4
   jsonwebtoken: ^8.5.1
   next: 12.1.5
   next-auth: ^4.3.4
   nodemailer: ^6.7.5
   pg: ^8.7.3
-  postcss: ^8.4.13
+  postcss: ^8.4.14
   prettier: ^2.6.2
   react: 18.1.0
   react-dom: 18.1.0
@@ -39,7 +39,7 @@ specifiers:
   react-markdown: ^8.0.3
   remark: ^14.0.2
   remark-html: ^15.0.1
-  sequelize: ^6.19.0
+  sequelize: ^6.20.0
   store2: ^2.13.2
   swr: ^1.3.0
   tailwindcss: ^3.0.24
@@ -744,7 +744,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001342
-      electron-to-chromium: 1.4.137
+      electron-to-chromium: 1.4.138
       escalade: 3.1.1
       node-releases: 2.0.5
       picocolors: 1.0.0
@@ -1028,8 +1028,8 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /electron-to-chromium/1.4.137:
-    resolution: {integrity: sha512-0Rcpald12O11BUogJagX3HsCN3FE83DSqWjgXoHo5a72KUKMSfI39XBgJpgNNxS9fuGzytaFjE06kZkiVFy2qA==}
+  /electron-to-chromium/1.4.138:
+    resolution: {integrity: sha512-IOyp2Seq3w4QLln+yZWcMF3VXhhduz4bwg9gfI+CnP5TkzwNXQ8FCZuwwPsnes73AfWdf5J2n2OXdUwDUspDPQ==}
     dev: false
 
   /emoji-regex/9.2.2:
