@@ -87,11 +87,11 @@ export function SearchRow({
         <span className="shrink-0 w-15 flex align-center">
           {thumbnail ? (
             <Image
-              className="rounded-full"
-              src={thumbnail}
               alt="Vercel Logo"
-              width={45}
+              className="rounded-full"
               height={45}
+              src={thumbnail}
+              width={45}
             />
           ) : (
             <span className="flex font-extrabold text-slate-400 border-slate-400 border-2 justify-center items-center rounded-full bg-white w-[45px] h-[45px]">
