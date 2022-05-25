@@ -43,29 +43,36 @@ export default function NewPostForm() {
     if (!isPostValid(data))
       throw new Error("Post cannot be saved because it is invalid");
 
-    const results = await requestClient(
-      `mutation InsertPost($company_name: String, $description: String, $location: String, $title: String) {
-      insert_posts_one(object: {company_name: $company_name, description: $description, location: $location, thumbnail: "", title: $title}) {
-        external_id
-        created_by_user_id
-      }
-    }`,
-      {
-        company_name: data.company_name,
-        description: data.description,
-        location: "Philadelphia, PA",
-        title: data.position
-      }
-    );
-
-    // clear cache
+    const cacheDraftPost = store(DRAFT_POST_CACHE_KEY);
     store.remove(DRAFT_POST_CACHE_KEY);
+
+    try {
+      const results = await requestClient(
+        `mutation InsertPost($company_name: String, $description: String, $location: String, $title: String) {
+          insert_posts_one(object: {company_name: $company_name, description: $description, location: $location, thumbnail: "", title: $title}) {
+            external_id
+            created_by_user_id
+          }
+        }`,
+        {
+          company_name: data.company_name,
+          description: data.description,
+          location: "Philadelphia, PA",
+          title: data.position
+        }
+      );
+    } catch (error) {
+      // restore cached draft post
+      store(DRAFT_POST_CACHE_KEY, cacheDraftPost);
+      console.error("ERROR_SAVING_POST");
+      console.error(error);
+    }
 
     // redirect to pending page
     router.push("/pending-posts");
   }
 
-  const isPostValid = useCallback((post: PostType): boolean => {
+  function isPostValid(post: PostType): boolean {
     return (
       !!post.position &&
       post.position.length > 0 &&
@@ -74,9 +81,7 @@ export default function NewPostForm() {
       !!post.company_name &&
       post.company_name.length > 0
     );
-  }, []);
-
-  const memoizedCommit = useCallback(commit, [session, isPostValid]);
+  }
 
   async function onSubmit(data: PostType) {
     const modifiedData = {
@@ -101,9 +106,8 @@ export default function NewPostForm() {
     const shouldSave: boolean =
       !session || !draftPostData.saving || !isPostValid(draftPostData);
     if (shouldSave) return;
-    memoizedCommit(draftPostData);
-  }, [session, memoizedCommit, isPostValid]);
-
+    commit(draftPostData);
+  }, [session]);
   return (
     <Form initialValues={formState} onSubmit={onSubmit}>
       {({ handleSubmit }) => (
