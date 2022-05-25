@@ -21,19 +21,26 @@ type AppPropsWithLayout = AppProps & {
   };
 };
 
+type LayoutType = ({
+  children
+}: {
+  children: any;
+  title: string | null | undefined;
+}) => JSX.Element;
+
 TimeAgo.setDefaultLocale(en.locale);
 TimeAgo.addDefaultLocale(en);
 
 function MyApp({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: { session, ...pageProps }
 }: AppPropsWithLayout) {
   const { title } = Component;
-  const Layout = Component.layout || DefaultLayout;
+  const Layout: LayoutType = Component.layout || DefaultLayout;
   return (
     <SessionProvider session={session}>
       <MainLayout title={title}>
-        <Layout>
+        <Layout title={title}>
           {Component.auth ? (
             <Auth isAdmin={pageProps.isAdmin || false}>
               <Component {...pageProps} />
