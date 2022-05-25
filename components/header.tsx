@@ -102,7 +102,7 @@ function classNames(...classes: any[]) {
 export default function Header() {
   return (
     <Popover className="relative bg-indigo-100 z-10 m-0 w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="mx-28 px-4 sm:px-6">
         <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
@@ -119,7 +119,7 @@ export default function Header() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden md:flex space-x-10">
-            <Popover className="relative">
+            {/* <Popover className="relative">
               {({ open }) => (
                 <>
                   <Popover.Button
@@ -192,16 +192,22 @@ export default function Header() {
                   </Transition>
                 </>
               )}
-            </Popover>
+            </Popover> */}
 
             <Link href="/create-job-post">
               <a className="text-base font-medium text-gray-500 hover:text-gray-900">
                 Post a Job
               </a>
             </Link>
-            <Link href="/secured">
+            {/* <Link href="/secured">
               <a className="text-base font-medium text-gray-500 hover:text-gray-900">
                 Secured
+              </a>
+            </Link> */}
+
+            <Link href="/pending-posts">
+              <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                Pending Posts
               </a>
             </Link>
 

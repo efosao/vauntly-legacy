@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import store from "store2";
 import { v4 as uuidv4 } from "uuid";
 import dynamic from "next/dynamic";
 import { signIn, useSession } from "next-auth/react";
+import router from "next/router";
 
 import requestClient from "../lib/request-client";
 import { SearchRow } from "./search-row";
@@ -36,12 +37,11 @@ export default function NewPostForm() {
     setFormState(data);
   }
 
-  async function onSubmit(data: PostType) {
-    const modifiedData = { ...data, saving: true };
-    updateFormState(modifiedData);
-    store(DRAFT_POST_CACHE_KEY, modifiedData);
-
+  async function commit(data: PostType) {
     if (!session) return signIn();
+
+    if (!isPostValid(data))
+      throw new Error("Post cannot be saved because it is invalid");
 
     const results = await requestClient(
       `mutation InsertPost($company_name: String, $description: String, $location: String, $title: String) {
@@ -58,7 +58,36 @@ export default function NewPostForm() {
       }
     );
 
-    console.log({ results });
+    // clear cache
+    store.remove(DRAFT_POST_CACHE_KEY);
+
+    // redirect to pending page
+    router.push("/pending-posts");
+  }
+
+  const isPostValid = useCallback((post: PostType): boolean => {
+    return (
+      !!post.position &&
+      post.position.length > 0 &&
+      !!post.description &&
+      post.description.length > 0 &&
+      !!post.company_name &&
+      post.company_name.length > 0
+    );
+  }, []);
+
+  const memoizedCommit = useCallback(commit, [session, isPostValid]);
+
+  async function onSubmit(data: PostType) {
+    const modifiedData = {
+      ...data,
+      saving: !!data.position && !!data.description
+    };
+    updateFormState(modifiedData);
+    store(DRAFT_POST_CACHE_KEY, modifiedData);
+
+    if (!session) return signIn();
+    commit(modifiedData);
   }
 
   useEffect(() => {
@@ -68,9 +97,12 @@ export default function NewPostForm() {
 
   useEffect(() => {
     const draftPostData = store(DRAFT_POST_CACHE_KEY) || {};
-    if (!session && draftPostData.saving) return;
-    onSubmit(draftPostData);
-  }, [session]);
+    // TODO: validate session and data before proceeeding
+    const shouldSave: boolean =
+      !session || !draftPostData.saving || !isPostValid(draftPostData);
+    if (shouldSave) return;
+    memoizedCommit(draftPostData);
+  }, [session, memoizedCommit, isPostValid]);
 
   return (
     <Form initialValues={formState} onSubmit={onSubmit}>
@@ -269,11 +301,11 @@ export default function NewPostForm() {
               </div>
             </section>
 
-            <div className="bg-blue-100 p-4 border rounded-md mb-10">
+            {/* <div className="bg-blue-100 p-4 border rounded-md mb-10">
               <pre className="whitespace-pre-wrap">
                 {JSON.stringify(formState, null, 2)}
               </pre>
-            </div>
+            </div> */}
           </div>
 
           <section className="bg-white fixed bottom-0 w-full p-4 -mx-6 border-t border-gray-200 z-20">
