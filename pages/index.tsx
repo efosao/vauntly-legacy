@@ -8,7 +8,7 @@ import Results from "../components/results";
 const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
 const fetcher = (query: string) => request(url, query);
 
-function genGetPostsQuery(pg: number = 0, size: number = 10): string {
+function genGetPostsQuery(pg = 0, size = 10): string {
   return `query GetPostsQuery {
     posts(limit: ${size}, offset: ${
     pg * size
@@ -28,7 +28,7 @@ function genGetPostsQuery(pg: number = 0, size: number = 10): string {
 const getPostsQuery = genGetPostsQuery(0);
 
 export async function getServerSideProps() {
-  let fallback = { [getPostsQuery]: null };
+  const fallback = { [getPostsQuery]: null };
   try {
     const posts = await request(url, getPostsQuery);
     fallback[getPostsQuery] = posts;

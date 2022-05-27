@@ -33,6 +33,8 @@
     "@types/node": "17.0.30",
     "@types/react": "18.0.8",
     "@types/react-dom": "18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
     "accounting": "^0.4.1",
     "autoprefixer": "^10.4.7",
     "axios": "^0.27.2",

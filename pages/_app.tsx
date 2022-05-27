@@ -10,7 +10,7 @@ import { ReactElement, ReactNode } from "react";
 import { DefaultLayout, MainLayout } from "../components/layouts";
 
 type NextPageWithLayout = NextPage & {
-  auth: boolean | {};
+  auth: boolean | Record<string, unknown>;
   // eslint-disable-next-line no-unused-vars
   getLayout?: (page: ReactElement) => ReactNode;
 };

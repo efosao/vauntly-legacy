@@ -11,6 +11,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const token = await getToken({ req, raw: true });
+  const token = await getToken({ raw: true, req });
   res.status(200).json({ name: "John Doe", token });
 }

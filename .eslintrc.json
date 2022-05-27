@@ -1,14 +1,32 @@
 {
-  "extends": ["next/core-web-vitals", "eslint:recommended"],
-  "plugins": ["simple-import-sort", "unused-imports"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "globals": {
+    "JSX": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "simple-import-sort",
+    "unused-imports"
+  ],
   "rules": {
     "react-hooks/exhaustive-deps": "off",
-    "sort-keys": ["warn", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
+    "sort-keys": [
+      "warn",
+      "asc",
+      {
+        "caseSensitive": true,
+        "natural": false,
+        "minKeys": 2
+      }
+    ],
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": "error",
     "unused-imports/no-unused-imports": "warn"
-  },
-  "globals": {
-    "JSX": true
   }
 }

@@ -42,7 +42,7 @@ export function SearchRow({
   function onRowSelect() {
     const elem = detailsRef.current;
     const elems = document.getElementsByClassName("details");
-    let runLast = () => {};
+    let runLast: undefined | (() => void) = undefined;
     for (let i = 0; i < elems.length; i += 1) {
       if (elem === elems[i]) {
         runLast = () => {
@@ -56,7 +56,7 @@ export function SearchRow({
         elems[i].classList.add("hidden");
       }
     }
-    runLast();
+    runLast && runLast();
   }
 
   function hideDetails() {

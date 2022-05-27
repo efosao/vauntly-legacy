@@ -14,7 +14,7 @@ export default function Results({ posts }: any) {
               company={p.company_name}
               createdAt={p.created_at}
               description={p.description}
-              id={p.id}
+              // id={p.id}
               key={p.id}
               thumbnail={p.thumbnail}
               title={p.title}

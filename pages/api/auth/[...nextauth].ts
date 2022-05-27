@@ -29,8 +29,8 @@ export default NextAuth({
       // Persist the OAuth access_token to the token right after signin
       // INFO: only [token] has data on post-signin requests, [profile] is always empty
       const { account, token, user } = message;
-      let email = token.email;
-      let userId = user?.id || token.sub;
+      const email = token.email;
+      const userId = user?.id || token.sub;
 
       if (userId) {
         token.id = userId;
