@@ -17,7 +17,7 @@ export function MainLayout({ children, title }: PageProps) {
       <Head>
         <title>{displayTitle}</title>
       </Head>
-      <main>
+      <main className="bg-gray-100 min-h-screen">
         <Header />
         {children}
       </main>

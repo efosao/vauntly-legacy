@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import {
   BookmarkAltIcon,
@@ -7,8 +5,6 @@ import {
   ChartBarIcon,
   CursorClickIcon,
   MenuIcon,
-  PhoneIcon,
-  PlayIcon,
   RefreshIcon,
   ShieldCheckIcon,
   SupportIcon,
@@ -16,83 +12,94 @@ import {
   XIcon
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import { Fragment } from "react";
+
+import Link from "next/link";
+
 import Login from "./login";
 
 const solutions = [
   {
-    name: "Analytics",
     description:
       "Get a better understanding of where your traffic is coming from.",
     href: "#",
-    icon: ChartBarIcon
+    icon: ChartBarIcon,
+    name: "Analytics"
   },
   {
-    name: "Engagement",
     description: "Speak directly to your customers in a more meaningful way.",
     href: "#",
-    icon: CursorClickIcon
+    icon: CursorClickIcon,
+    name: "Engagement"
   },
   {
-    name: "Security",
     description: "Your customers' data will be safe and secure.",
     href: "#",
-    icon: ShieldCheckIcon
+    icon: ShieldCheckIcon,
+    name: "Security"
   },
   {
-    name: "Integrations",
     description: "Connect with third-party tools that you're already using.",
     href: "#",
-    icon: ViewGridIcon
+    icon: ViewGridIcon,
+    name: "Integrations"
   },
   {
-    name: "Automations",
     description:
       "Build strategic funnels that will drive your customers to convert",
     href: "#",
-    icon: RefreshIcon
+    icon: RefreshIcon,
+    name: "Automations"
   }
 ];
-const callsToAction = [
-  { name: "Watch Demo", href: "#", icon: PlayIcon },
-  { name: "Contact Sales", href: "#", icon: PhoneIcon }
-];
+
+// const callsToAction = [
+//   { name: "Watch Demo", href: "#", icon: PlayIcon },
+//   { name: "Contact Sales", href: "#", icon: PhoneIcon }
+// ];
+
 const resources = [
   {
-    name: "Help Center",
     description:
       "Get all of your questions answered in our forums or contact support.",
     href: "#",
-    icon: SupportIcon
+    icon: SupportIcon,
+    name: "Help Center"
   },
   {
-    name: "Guides",
     description:
       "Learn how to maximize our platform to get the most out of it.",
     href: "#",
-    icon: BookmarkAltIcon
+    icon: BookmarkAltIcon,
+    name: "Guides"
   },
   {
-    name: "Events",
     description:
       "See what meet-ups and other events we might be planning near you.",
     href: "#",
-    icon: CalendarIcon
+    icon: CalendarIcon,
+    name: "Events"
   },
   {
-    name: "Security",
     description: "Understand how we take your privacy seriously.",
     href: "#",
-    icon: ShieldCheckIcon
+    icon: ShieldCheckIcon,
+    name: "Security"
   }
 ];
+
 const recentPosts = [
-  { id: 1, name: "Boost your conversion rate", href: "#" },
+  { href: "#", id: 1, name: "Boost your conversion rate" },
   {
+    href: "#",
     id: 2,
-    name: "How to use search engine optimization to drive traffic to your site",
-    href: "#"
+    name: "How to use search engine optimization to drive traffic to your site"
   },
-  { id: 3, name: "Improve your customer experience", href: "#" }
+  {
+    href: "#",
+    id: 3,
+    name: "Improve your customer experience"
+  }
 ];
 
 function classNames(...classes: any[]) {
@@ -102,7 +109,7 @@ function classNames(...classes: any[]) {
 export default function Header() {
   return (
     <Popover className="relative bg-indigo-100 z-10 m-0 w-full">
-      <div className="mx-28 px-4 sm:px-6">
+      <div className="max-w-7xl m-auto">
         <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">

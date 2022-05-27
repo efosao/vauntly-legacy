@@ -1,13 +1,14 @@
-import type { AppProps } from "next/app";
-import TimeAgo from "javascript-time-ago";
 import { SessionProvider, useSession } from "next-auth/react";
-
-import en from "javascript-time-ago/locale/en.json";
+import type { AppProps } from "next/app";
 import { NextPage } from "next/types";
 import { ReactElement, ReactNode } from "react";
 
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
+
 import "../styles/globals.css";
-import { MainLayout, DefaultLayout } from "../components/layouts";
+
+import { DefaultLayout, MainLayout } from "../components/layouts";
 
 type NextPageWithLayout = NextPage & {
   auth: boolean | {};
@@ -17,7 +18,7 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout & {
     title: string | undefined;
-    layout: (({ children }: { children: any }) => JSX.Element) | undefined;
+    layout: ({ children }: { children: any }) => JSX.Element;
   };
 };
 

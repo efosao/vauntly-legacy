@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Head, Html, Main, NextScript } from "next/document";
 
 const SITE_DESCRIPTION = `The freshest job postings in the industry.`;
 
@@ -21,7 +21,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           /> */}
         </Head>
-        <body className="bg-slate-100">
+        <body>
           <Main />
           <NextScript />
         </body>
