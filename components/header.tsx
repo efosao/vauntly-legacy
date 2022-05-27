@@ -109,7 +109,7 @@ export default function Header() {
   return (
     <Popover className="relative bg-indigo-100 z-10 m-0 w-full">
       <div className="max-w-7xl m-auto">
-        <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
+        <div className="flex justify-between items-center py-4 mx-4 md:mx-8 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
               <a className="text-2xl font-extrabold leading-none text-gray-900">
