@@ -1,6 +1,6 @@
-import { useSession, signIn } from "next-auth/react";
 import { UserIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
 // import axios from "axios";
 
 export default function Component() {

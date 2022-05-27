@@ -1,5 +1,6 @@
-import { useSession } from "next-auth/react";
 import { getToken } from "next-auth/jwt";
+import { useSession } from "next-auth/react";
+
 import { SimpleLayout } from "../components/layouts";
 
 export default function Page({ isAdmin }) {
@@ -15,7 +16,7 @@ export default function Page({ isAdmin }) {
 }
 
 Page.auth = {
-  role: "admin",
+  role: "admin"
 };
 
 export async function getServerSideProps({ req }) {

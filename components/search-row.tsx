@@ -1,12 +1,12 @@
 import cx from "classnames";
+import { formatDistance } from "date-fns";
 import initialism from "initialism";
 import Image from "next/image";
 import { useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { formatDistance } from "date-fns";
 
 type SearchRowType = {
-  id: number;
+  // id: number;
   color: string;
   company: string;
   createdAt: string;
@@ -16,7 +16,7 @@ type SearchRowType = {
 };
 
 export function SearchRow({
-  id,
+  // id,
   color,
   company,
   createdAt,

@@ -1,28 +1,30 @@
-import { SessionProvider, useSession } from "next-auth/react";
-import type { AppProps } from "next/app";
-import { NextPage } from "next/types";
-import { ReactElement, ReactNode } from "react";
+import "../styles/globals.css";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
-
-import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { NextPage } from "next/types";
+import { SessionProvider, useSession } from "next-auth/react";
+import { ReactElement, ReactNode } from "react";
 
 import { DefaultLayout, MainLayout } from "../components/layouts";
 
 type NextPageWithLayout = NextPage & {
   auth: boolean | {};
+  // eslint-disable-next-line no-unused-vars
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout & {
     title: string | undefined;
+    // eslint-disable-next-line no-unused-vars
     layout: ({ children }: { children: any }) => JSX.Element;
   };
 };
 
 type LayoutType = ({
+  // eslint-disable-next-line no-unused-vars
   children
 }: {
   children: any;

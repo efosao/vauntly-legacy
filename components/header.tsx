@@ -12,9 +12,8 @@ import {
   XIcon
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { Fragment } from "react";
-
 import Link from "next/link";
+import { Fragment } from "react";
 
 import Login from "./login";
 

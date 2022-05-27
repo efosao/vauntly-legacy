@@ -1,11 +1,12 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import jwt from "jsonwebtoken";
-import requestClient from "../lib/request-client";
 
 import { SimpleLayout } from "../components/layouts";
+import requestClient from "../lib/request-client";
 
-export default function Page({ isAdmin }) {
+// export default function Page({ isAdmin }) {
+
+export default function Page() {
   const { data: session }: any = useSession();
   const email = session?.user?.email;
   const [userData, setUserData] = useState({});
@@ -50,17 +51,17 @@ export default function Page({ isAdmin }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
-  const token = req.cookies["next-auth.session-token"];
-  if (!token) return { props: { isAdmin: false } };
+// export async function getServerSideProps({ req }) {
+//   const token = req.cookies["next-auth.session-token"];
+//   if (!token) return { props: { isAdmin: false } };
 
-  const decodedToken = jwt.verify(token, process.env.NEXTAUTH_SECRET, {
-    algorithms: ["HS256"]
-  });
-  const adminEmails = (process.env.ADMIN_EMAILS || "").split(",");
-  const isAdmin = adminEmails.includes(decodedToken?.email || "");
-  return { props: { isAdmin } };
-}
+//   const decodedToken = jwt.verify(token, process.env.NEXTAUTH_SECRET, {
+//     algorithms: ["HS256"]
+//   });
+//   const adminEmails = (process.env.ADMIN_EMAILS || "").split(",");
+//   const isAdmin = adminEmails.includes(decodedToken?.email || "");
+//   return { props: { isAdmin } };
+// }
 
 Page.auth = {
   role: "admin"

@@ -1,10 +1,10 @@
+import dynamic from "next/dynamic";
+import router from "next/router";
+import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import store from "store2";
 import { v4 as uuidv4 } from "uuid";
-import dynamic from "next/dynamic";
-import { signIn, useSession } from "next-auth/react";
-import router from "next/router";
 
 import requestClient from "../lib/request-client";
 import { SearchRow } from "./search-row";
@@ -61,6 +61,7 @@ export default function NewPostForm() {
           title: data.position
         }
       );
+      console.log({ results });
     } catch (error) {
       // restore cached draft post
       store(DRAFT_POST_CACHE_KEY, cacheDraftPost);
@@ -298,7 +299,7 @@ export default function NewPostForm() {
                   company={formState?.company_name}
                   createdAt={new Date().toString()}
                   description={formState?.description}
-                  id={0}
+                  // id={0}
                   thumbnail={null}
                   title={formState?.position}
                 />
