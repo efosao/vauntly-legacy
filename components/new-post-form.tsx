@@ -297,9 +297,9 @@ export default function NewPostForm() {
               <div>
                 <SearchRow
                   company={formState?.company_name}
-                  createdAt={new Date().toString()}
                   description={formState?.description}
-                  // id={0}
+                  extId="temp"
+                  publishedAt={new Date().toString()}
                   thumbnail={null}
                   title={formState?.position}
                 />

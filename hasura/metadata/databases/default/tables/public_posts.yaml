@@ -26,8 +26,10 @@ select_permissions:
       columns:
         - company_name
         - created_at
+        - created_by_user_id
         - description
         - details_metadata
+        - external_id
         - id
         - location
         - metadata
