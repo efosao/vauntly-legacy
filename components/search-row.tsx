@@ -1,26 +1,26 @@
 import cx from "classnames";
-import { formatDistance } from "date-fns";
 import initialism from "initialism";
 import Image from "next/image";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
+import { getFriendlyDuration } from "../lib/date";
+
 type SearchRowType = {
-  // id: number;
+  extId: string | null | undefined;
   color: string;
   company: string;
-  createdAt: string;
+  publishedAt: string;
   description: string;
   thumbnail: string | null | undefined;
   title: string | null | undefined;
 };
 
 export function SearchRow({
-  // id,
   color,
   company,
-  createdAt,
   description,
+  publishedAt,
   thumbnail,
   title
 }: SearchRowType) {
@@ -39,7 +39,7 @@ export function SearchRow({
   const detailsRef = useRef<any>();
   const containerRef = useRef<any>();
 
-  function onRowSelect() {
+  const onRowSelect = useCallback(() => {
     const elem = detailsRef.current;
     const elems = document.getElementsByClassName("details");
     let runLast: undefined | (() => void) = undefined;
@@ -57,21 +57,20 @@ export function SearchRow({
       }
     }
     runLast && runLast();
-  }
+  }, []);
 
-  function hideDetails() {
-    console.log(detailsRef.current);
+  const hideDetails = useCallback(() => {
     const elem = detailsRef.current;
     elem.classList.remove("show");
-  }
+  }, []);
 
-  function apply(e: any) {
+  const apply = useCallback((e: any) => {
     e.stopPropagation();
-  }
+  }, []);
 
-  function selectTagHandler(e: any) {
+  const selectTagHandler = useCallback((e: any) => {
     e.stopPropagation();
-  }
+  }, []);
 
   const companyWordCount = company.split(" ").length;
   const initialsLength = Math.min(companyWordCount, 3);
@@ -117,11 +116,7 @@ export function SearchRow({
             RUST
           </button>
         </div>
-        <div>
-          {formatDistance(new Date(createdAt), new Date(), {
-            addSuffix: true
-          })}
-        </div>
+        <div>{publishedAt ? getFriendlyDuration(publishedAt) : "n/a"}</div>
         <button onClick={selectTagHandler} className={buttonClasses}>
           <span className="px-8 py-2">Apply</span>
         </button>

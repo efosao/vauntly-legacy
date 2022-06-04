@@ -1,7 +1,5 @@
 import "../styles/globals.css";
 
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en.json";
 import type { AppProps } from "next/app";
 import { NextPage } from "next/types";
 import { SessionProvider, useSession } from "next-auth/react";
@@ -19,7 +17,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout & {
     title: string | undefined;
     // eslint-disable-next-line no-unused-vars
-    layout: ({ children }: { children: any }) => JSX.Element;
+    layout: ({ children }: { children: ReactElement }) => JSX.Element;
   };
 };
 
@@ -30,9 +28,6 @@ type LayoutType = ({
   children: any;
   title: string | null | undefined;
 }) => JSX.Element;
-
-TimeAgo.setDefaultLocale(en.locale);
-TimeAgo.addDefaultLocale(en);
 
 function MyApp({
   Component,

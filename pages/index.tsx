@@ -10,17 +10,23 @@ const fetcher = (query: string) => request(url, query);
 
 function genGetPostsQuery(pg = 0, size = 10): string {
   return `query GetPostsQuery {
-    posts(limit: ${size}, offset: ${
-    pg * size
-  }, order_by: {id: desc}, where: {published_at: {_is_null: false}}) {
-      id
-      location
-      thumbnail
-      title
-      description
+    posts(limit: ${size}, offset: ${pg * size}, where: {
+      _or: [
+        {published_at: {_is_null: false }}, 
+        {created_by_user_id: {_is_null: false}}
+      ]}, order_by: {id: desc}) {
       company_name
       created_at
+      created_by_user_id
+      description
+      external_id
+      id
+      location
+      published_at
       state
+      title
+      thumbnail
+      updated_at
     }
   }`;
 }
