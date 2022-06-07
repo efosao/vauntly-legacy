@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import useSWR, { SWRConfig } from "swr";
 
 import Results from "../components/results";
+import Skeleton from "../components/results/skeleton";
 
 const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
 const fetcher = (query: string) => request(url, query);
@@ -48,7 +49,7 @@ export async function getServerSideProps() {
 interface PageProps {
   fallback:
     | {
-        [key: string]: any;
+        [key: string]: never;
       }
     | undefined;
 }
@@ -113,7 +114,15 @@ export default function Page({ fallback }: PageProps) {
           dataLength={postCount}
           next={fetchNextPage}
           hasMore={hasMore}
-          loader={<h4 ref={loaderRef}>Loading...</h4>}
+          loader={
+            <div ref={loaderRef}>
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+            </div>
+          }
           endMessage={
             <p className="m-4 p-4 flex justify-center text-3xl">🎉 🎉 🎉</p>
           }
