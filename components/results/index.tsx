@@ -1,12 +1,13 @@
+import { Post } from "../../types/posts.type";
 import { SearchRow } from "../search-row";
 import ResultsSkeleton from "./skeleton";
 
-export default function Results({ posts }: any) {
+export default function Results({ posts }: { posts: Post[] }) {
   return (
     <div>
       {posts.length > 0 ? (
-        posts.map((p: any) => {
-          const color = new Set([116, 117, 112]).has(p.id) ? "yellow" : "";
+        posts.map((p) => {
+          const color = new Set([116, 117, 112]).has(p.id || 0) ? "yellow" : "";
 
           return (
             <SearchRow

@@ -25,7 +25,7 @@ type LayoutType = ({
   // eslint-disable-next-line no-unused-vars
   children
 }: {
-  children: any;
+  children: ReactElement;
   title: string | null | undefined;
 }) => JSX.Element;
 

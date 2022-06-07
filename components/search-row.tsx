@@ -17,6 +17,7 @@ type SearchRowType = {
 };
 
 export function SearchRow({
+  extId,
   color,
   company,
   description,
@@ -77,7 +78,11 @@ export function SearchRow({
 
   return (
     <div className="relative" onBlurCapture={hideDetails}>
-      <a ref={anchorRef} className="absolute -top-4" />
+      <a
+        href={`/#${extId && extId.slice(0, 36)}`}
+        ref={anchorRef}
+        className="absolute -top-4"
+      />
       <div
         ref={containerRef}
         className={containerClasses}
