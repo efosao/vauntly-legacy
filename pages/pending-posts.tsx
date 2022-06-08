@@ -20,7 +20,7 @@ type PostType = {
 type PostsType = PostType[];
 
 export default function PendingPosts() {
-  const { data: session }: any = useSession();
+  const { data: session } = useSession();
   const [posts, setPosts] = useState<PostsType>([]);
   const [cart, setCart] = useState<Set<string>>(new Set());
 

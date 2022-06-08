@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { SimpleLayout } from "../components/layouts";
 
 export default function Page({ isAdmin }) {
-  const { data }: any = useSession();
+  const { data } = useSession();
   const email = data?.user?.email;
 
   return (

@@ -7,8 +7,10 @@ import requestClient from "../lib/request-client";
 // export default function Page({ isAdmin }) {
 
 export default function Page() {
-  const { data: session }: any = useSession();
-  const email = session?.user?.email;
+  const sessionResult = useSession();
+  const email = sessionResult.data?.user?.email;
+  const isAdmin = !!sessionResult.data?.isAdmin;
+
   const [userData, setUserData] = useState({});
 
   function callSignOut() {
@@ -40,7 +42,7 @@ export default function Page() {
   return (
     <>
       <div>Email: {email}</div>
-      <div>Is Admin?: {session.isAdmin ? "True" : "False"}</div>
+      <div>Is Admin?: {isAdmin ? "True" : "False"}</div>
       <div className="m-4 border rounded p-4">
         <pre>{JSON.stringify(userData, null, 4)}</pre>
       </div>

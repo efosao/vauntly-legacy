@@ -4,7 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 // import axios from "axios";
 
 export default function Component() {
-  const { data: session }: any = useSession();
+  const { data: session } = useSession();
 
   // async function getToken() {
   //   const { data } = await axios("/api/hello");
