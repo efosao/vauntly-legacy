@@ -1,7 +1,7 @@
 import cx from "classnames";
 import initialism from "initialism";
 import Image from "next/image";
-import { useCallback, useRef } from "react";
+import { MouseEvent, useCallback, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
 import { getFriendlyDuration } from "../lib/date";
@@ -36,9 +36,9 @@ export function SearchRow({
     { "hover:bg-yellow-700": color === "yellow" }
   );
 
-  const anchorRef = useRef<any>();
-  const detailsRef = useRef<any>();
-  const containerRef = useRef<any>();
+  const anchorRef = useRef<HTMLAnchorElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const onRowSelect = useCallback(() => {
     const elem = detailsRef.current;
@@ -48,8 +48,8 @@ export function SearchRow({
       if (elem === elems[i]) {
         runLast = () => {
           elems[i].classList.toggle("hidden");
-          containerRef.current.classList.toggle("rounded-b-none");
-          anchorRef.current.scrollIntoView({
+          containerRef.current?.classList.toggle("rounded-b-none");
+          anchorRef.current?.scrollIntoView({
             behavior: "smooth"
           });
         };
@@ -62,14 +62,14 @@ export function SearchRow({
 
   const hideDetails = useCallback(() => {
     const elem = detailsRef.current;
-    elem.classList.remove("show");
+    elem?.classList.remove("show");
   }, []);
 
-  const apply = useCallback((e: any) => {
+  const apply = useCallback((e: MouseEvent) => {
     e.stopPropagation();
   }, []);
 
-  const selectTagHandler = useCallback((e: any) => {
+  const selectTagHandler = useCallback((e: MouseEvent) => {
     e.stopPropagation();
   }, []);
 
