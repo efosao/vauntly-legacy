@@ -115,13 +115,14 @@ export default function Page({ fallback }: PageProps) {
           next={fetchNextPage}
           hasMore={hasMore}
           loader={
-            <div ref={loaderRef}>
+            <>
+              <div ref={loaderRef} />
               <Skeleton />
               <Skeleton />
               <Skeleton />
               <Skeleton />
               <Skeleton />
-            </div>
+            </>
           }
           endMessage={
             <p className="m-4 p-4 flex justify-center text-3xl">🎉 🎉 🎉</p>
