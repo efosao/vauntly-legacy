@@ -17,16 +17,20 @@ type SearchRowType = {
 };
 
 export function SearchRow({
-  extId,
   color,
   company,
   description,
+  extId,
   publishedAt,
   thumbnail,
   title
 }: SearchRowType) {
+  const mainRowClassName = `main_search_row`;
+  const containerClassName = `container_wrapper`;
+  const detailsClassName = `details_wrapper`;
+
   const containerClasses = cx(
-    "p-4 my-4 bg-indigo-200 flex items-center space-x-4 rounded-xl shadow-lg h-24 hover:bg-indigo-300 transition-all duration-200",
+    `${containerClassName} p-4 my-4 bg-white flex items-center space-x-4 border rounded-xl h-24 hover:bg-gray-200 transition-all duration-200`,
     { "bg-yellow-200": color === "yellow" },
     { "hover:bg-yellow-300": color === "yellow" }
   );
@@ -37,32 +41,42 @@ export function SearchRow({
   );
 
   const anchorRef = useRef<HTMLAnchorElement>(null);
-  const detailsRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const onRowSelect = useCallback(() => {
-    const elem = detailsRef.current;
-    const elems = document.getElementsByClassName("details");
+    const selectedRow = mainRef.current;
+    const rowElems = document.getElementsByClassName(mainRowClassName);
     let runLast: undefined | (() => void) = undefined;
-    for (let i = 0; i < elems.length; i += 1) {
-      if (elem === elems[i]) {
+    for (let i = 0; i < rowElems.length; i += 1) {
+      const rowDetailsElem =
+        rowElems[i].getElementsByClassName(detailsClassName)[0];
+      const rowContainerElem =
+        rowElems[i].getElementsByClassName(containerClassName)[0];
+
+      if (selectedRow === rowElems[i]) {
         runLast = () => {
-          elems[i].classList.toggle("hidden");
-          containerRef.current?.classList.toggle("rounded-b-none");
-          anchorRef.current?.scrollIntoView({
-            behavior: "smooth"
-          });
+          if (rowDetailsElem && rowDetailsElem.classList.contains("hidden")) {
+            rowDetailsElem?.classList.remove("hidden");
+            rowContainerElem?.classList.add("rounded-b-none");
+            anchorRef.current?.scrollIntoView({
+              behavior: "smooth"
+            });
+          } else {
+            rowDetailsElem?.classList.add("hidden");
+            rowContainerElem?.classList.remove("rounded-b-none");
+          }
         };
       } else {
-        elems[i].classList.add("hidden");
+        rowDetailsElem?.classList.add("hidden");
+        rowContainerElem?.classList.remove("rounded-b-none");
       }
     }
     runLast && runLast();
   }, []);
 
   const hideDetails = useCallback(() => {
-    const elem = detailsRef.current;
-    elem?.classList.remove("show");
+    const detailElems = mainRef.current?.getElementsByClassName("details");
+    if (detailElems) detailElems[0]?.classList.remove("show");
   }, []);
 
   const apply = useCallback((e: MouseEvent) => {
@@ -77,17 +91,17 @@ export function SearchRow({
   const initialsLength = Math.min(companyWordCount, 3);
 
   return (
-    <div className="relative" onBlurCapture={hideDetails}>
+    <div
+      className={`relative ${mainRowClassName}`}
+      onBlurCapture={hideDetails}
+      ref={mainRef}
+    >
       <a
+        className="absolute -top-4"
         href={`/#${extId && extId.slice(0, 36)}`}
         ref={anchorRef}
-        className="absolute -top-4"
       />
-      <div
-        ref={containerRef}
-        className={containerClasses}
-        onClick={onRowSelect}
-      >
+      <div className={containerClasses} onClick={onRowSelect}>
         <span className="shrink-0 w-15 flex align-center">
           {thumbnail ? (
             <Image
@@ -127,8 +141,7 @@ export function SearchRow({
         </button>
       </div>
       <div
-        ref={detailsRef}
-        className="bg-white p-4 hidden details rounded-b -mt-4"
+        className={`bg-white p-4 hidden ${detailsClassName} rounded-b -mt-4`}
       >
         <article className="prose-sm lg:prose-xl">
           <h2>{company} is hiring a</h2>
