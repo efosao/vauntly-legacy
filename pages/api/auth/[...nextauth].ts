@@ -1,30 +1,17 @@
-import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter";
 import jwt from 'jsonwebtoken';
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import EmailProvider from "next-auth/providers/email";
-import { DataTypes, Sequelize } from "sequelize";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
 
-const dbUrl = process.env.PG_DATABASE_URL || '';
-const sequelize = new Sequelize(dbUrl, { logging: false });
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
-// sequelize.sync();
+const prisma = new PrismaClient();
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 export default NextAuth({
-  adapter: SequelizeAdapter(sequelize, {
-    models: {
-      User: sequelize.define("user", {
-        ...models.User,
-        phoneNumber: DataTypes.STRING,
-        roles: {
-          defaultValue: ["user"],
-          type: DataTypes.JSONB,
-        },
-      }),
-    },
-  }),
+  adapter: PrismaAdapter(prisma),
   callbacks: {
     async jwt(message) {
       // Persist the OAuth access_token to the token right after signin

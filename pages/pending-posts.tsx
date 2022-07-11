@@ -25,7 +25,7 @@ export default function PendingPosts() {
   const [cart, setCart] = useState<Set<string>>(new Set());
 
   const getPosts = useCallback(async () => {
-    const getUsersQuery = `query GetPosts($createdByUserId: uuid) {
+    const getUsersQuery = `query GetPosts($createdByUserId: String) {
       posts(where: {created_by_user_id: {_eq: $createdByUserId}}, order_by: {created_at: desc}) {
         company_name
         created_at
