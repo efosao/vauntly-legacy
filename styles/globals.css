@@ -13,16 +13,31 @@
   @apply text-sm border-2 border-black rounded-xl px-4 py-1 m-1 uppercase font-bold cursor-pointer hidden md:flex;
 }
 
-.details ul {
-  font-weight: 500;
-  list-style-type: disc;
+.details_wrapper a {
+  color: gray;
+  border-bottom: 4px solid #FEE;
+  padding: 2px 4px;
+  transition: all 0.3s;
 }
 
-.details p {
+.details_wrapper a:hover {
+  background: #FEE;
+  border-bottom: 4px solid #FCC;
+}
+
+.details_wrapper ul {
+  list-style: disc;
+}
+
+.details_wrapper ol {
+  list-style: decimal;
+}
+
+.details_wrapper p {
   white-space: pre-wrap;
 }
 
-.details blockquote {
+.details_wrapper blockquote {
   border-left: 4px #73a7cd solid;
   background: #dce6f0;
   font-weight: 500;

@@ -146,7 +146,9 @@ export function SearchRow({
         <article className="prose-sm lg:prose-xl">
           <h2>{company} is hiring a</h2>
           <h3>{title}</h3>
-          <ReactMarkdown>{description.replaceAll("•", "*")}</ReactMarkdown>
+          <ReactMarkdown
+            children={description.replaceAll("•", "*").replaceAll("●", "*")}
+          />
         </article>
       </div>
     </div>
