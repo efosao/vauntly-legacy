@@ -1,6 +1,7 @@
 import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter";
 import jwt from 'jsonwebtoken';
 import NextAuth from "next-auth";
+import GithubProvider from "next-auth/providers/github";
 import EmailProvider from "next-auth/providers/email";
 import { DataTypes, Sequelize } from "sequelize";
 
@@ -87,10 +88,17 @@ export default NextAuth({
       from: process.env.EMAIL_FROM,
       server: process.env.EMAIL_SERVER,
     }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+      checks: "none"
+    }),
   ],
   secret: NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60 * 24,
+    updateAge: 60 * 60 * 4
   },
   theme: {
     colorScheme: "light",
