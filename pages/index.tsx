@@ -9,7 +9,7 @@ import Skeleton from "../components/results/skeleton";
 const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
 const fetcher = (query: string) => request(url, query);
 
-function genGetPostsQuery(pg = 0, size = 10): string {
+function genGetPostsQuery(pg = 0, size = 5): string {
   return `query GetPostsQuery {
     posts(limit: ${size}, offset: ${pg * size}, where: {
       _or: [

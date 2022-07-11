@@ -76,15 +76,15 @@ export default NextAuth({
       server: process.env.EMAIL_SERVER,
     }),
     GithubProvider({
+      checks: "none",
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      checks: "none"
     }),
   ],
   secret: NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt",
     maxAge: 60 * 60 * 24,
+    strategy: "jwt",
     updateAge: 60 * 60 * 4
   },
   theme: {

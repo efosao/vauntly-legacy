@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 type Data = {
   name: string;
-  posts: any;
+  posts: string;
 };
 
 export default async function handler(
@@ -15,5 +15,5 @@ export default async function handler(
 ) {
   // const token = await getToken({ raw: true, req });
   const posts = await prisma.posts.findMany({ take: 2 });
-  res.status(200).json({ name: "John Doe", posts });
+  res.status(200).json({ name: "John Doe", posts: JSON.stringify(posts, null, 2) });
 }
