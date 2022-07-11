@@ -34,7 +34,7 @@ function genGetPostsQuery(pg = 0, size = 10): string {
 
 const getPostsQuery = genGetPostsQuery(0);
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   const fallback = { [getPostsQuery]: null };
   try {
     const posts = await request(url, getPostsQuery);
@@ -42,6 +42,12 @@ export async function getServerSideProps() {
   } catch (error) {
     console.log({ error });
   }
+
+  const ONE_DAY_SECONDS = 60 * 60 * 24;
+  ctx.res?.setHeader(
+    "Cache-Control",
+    `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`
+  );
 
   return { props: { fallback } };
 }
