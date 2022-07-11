@@ -43,6 +43,7 @@ dokku apps:create vauntly
 dokku domains:add vauntly stage.vauntly.com
 
 dokku config:set vauntly \
+DATABASE_URL="postgres://postgres:5005227a52c02361b7e95a1f5acfc7f0@efosa.me:44553/jobs_db" \
 PG_DATABASE_URL="postgres://postgres:5005227a52c02361b7e95a1f5acfc7f0@efosa.me:44553/jobs_db" \
 NEXT_PUBLIC_GQL_HOST="https://gql.vauntly.com" \
 NEXTAUTH_URL="https://stage.vauntly.com" \
@@ -50,6 +51,8 @@ NEXTAUTH_SECRET="cbbe419b7f66fbe846e5584cb5ea3629" \
 ADMIN_EMAILS="efosao@gmail.com,efosao+33@gmail.com" \
 EMAIL_SERVER="smtp://efosao@gmail.com:frbxbjaompqgrwuv@smtp.gmail.com:587" \
 EMAIL_FROM="efosao@gmail.com"
+GITHUB_ID="20848f635f0dfe62060a"
+GITHUB_SECRET="7ba000545cf73a034df6823f8bb64f7c67e4a1cc"
 
 dokku letsencrypt vauntly
 ```
