@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react";
+
 import { SimpleLayout } from "../components/layouts";
 
 export default function Page() {
