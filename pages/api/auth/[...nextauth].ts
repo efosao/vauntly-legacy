@@ -1,7 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -9,7 +9,7 @@ import GoogleProvider from "next-auth/providers/google";
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
 const prisma = new PrismaClient();
 
-const providers = [EmailProvider({
+const providers: NextAuthOptions["providers"] = [EmailProvider({
   from: process.env.EMAIL_FROM,
   server: process.env.EMAIL_SERVER,
 }),
@@ -22,6 +22,13 @@ GithubProvider({
 const googleProvider = (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) ? GoogleProvider({
   clientId: process.env.GOOGLE_CLIENT_ID || "",
   clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+  authorization: {
+    params: {
+      prompt: "consent",
+      access_type: "offline",
+      response_type: "code"
+    }
+  }
 }) : undefined;
 
 if (googleProvider) providers.push(googleProvider);
