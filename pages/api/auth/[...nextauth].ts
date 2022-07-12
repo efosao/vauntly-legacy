@@ -4,9 +4,27 @@ import jwt from 'jsonwebtoken';
 import NextAuth from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
 const prisma = new PrismaClient();
+
+const providers = [EmailProvider({
+  from: process.env.EMAIL_FROM,
+  server: process.env.EMAIL_SERVER,
+}),
+GithubProvider({
+  checks: "none",
+  clientId: process.env.GITHUB_ID,
+  clientSecret: process.env.GITHUB_SECRET,
+})];
+
+const googleProvider = (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) ? GoogleProvider({
+  clientId: process.env.GOOGLE_CLIENT_ID || "",
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+}) : undefined;
+
+if (googleProvider) providers.push(googleProvider);
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -70,17 +88,7 @@ export default NextAuth({
       return encodedToken;
     },
   },
-  providers: [
-    EmailProvider({
-      from: process.env.EMAIL_FROM,
-      server: process.env.EMAIL_SERVER,
-    }),
-    GithubProvider({
-      checks: "none",
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-  ],
+  providers,
   secret: NEXTAUTH_SECRET,
   session: {
     maxAge: 60 * 60 * 24,
