@@ -104,7 +104,9 @@ export default function Page({ fallback }: PageProps) {
   return (
     <SWRConfig value={fallback}>
       <article className="prose lg:prose-2xl bg-white p-4 my-4 rounded-md shadow-lg mx-auto w-full">
-        <h1>The freshest job postings in the industry.</h1>
+        <h1 className="text-green-900">
+          The freshest job postings in the industry!
+        </h1>
         <div className="flex flex-col items-center justify-center bg-pink-200 px-4 py-2 w-full rounded-md md:flex-row">
           <p className="m-2 font-bold">Discover your next job today</p>
           <input
