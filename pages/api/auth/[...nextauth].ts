@@ -20,15 +20,16 @@ GithubProvider({
 })];
 
 const googleProvider = (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) ? GoogleProvider({
-  clientId: process.env.GOOGLE_CLIENT_ID || "",
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
   authorization: {
     params: {
-      prompt: "consent",
       access_type: "offline",
+      prompt: "consent",
       response_type: "code"
     }
-  }
+  },
+  checks: "none",
+  clientId: process.env.GOOGLE_CLIENT_ID || "",
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
 }) : undefined;
 
 if (googleProvider) providers.push(googleProvider);
@@ -66,6 +67,10 @@ export default NextAuth({
       session.token = encodedToken;
       return session;
     },
+    async signIn(signInResult) {
+      console.log({ signInResult });
+      return true;
+    }
   },
   events: {
     async createUser({ user }) {
