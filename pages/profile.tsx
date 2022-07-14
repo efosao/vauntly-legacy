@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 import { SimpleLayout } from "../components/layouts";
 
 export default function Page() {
-  const sessionResult = useSession();
+  const sessionResult = { data: { user: { email: "n/a" }, isAdmin: false } };
   const email = sessionResult.data?.user?.email;
   const isAdmin = !!sessionResult.data?.isAdmin;
 

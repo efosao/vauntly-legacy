@@ -1,6 +1,5 @@
 import { MinusIcon, PlusIcon, ShoppingCartIcon } from "@heroicons/react/solid";
 import accounting from "accounting";
-import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 
 import { SimpleLayout } from "../components/layouts";
@@ -20,7 +19,8 @@ type PostType = {
 type PostsType = PostType[];
 
 export default function PendingPosts() {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const session = null;
   const [posts, setPosts] = useState<PostsType>([]);
   const [cart, setCart] = useState<Set<string>>(new Set());
 

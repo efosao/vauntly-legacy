@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import router from "next/router";
-import { signIn, useSession } from "next-auth/react";
+// import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import store from "store2";
@@ -22,7 +22,8 @@ type PostType = {
 
 export default function NewPostForm() {
   const [formState, setFormState] = useState<PostType>();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const session = null;
 
   const DynamicEditorAdapter = ({ input }) => {
     return (
@@ -38,7 +39,7 @@ export default function NewPostForm() {
   }
 
   async function commit(data: PostType) {
-    if (!session) return signIn();
+    // if (!session) return signIn();
 
     if (!isPostValid(data))
       throw new Error("Post cannot be saved because it is invalid");
@@ -92,7 +93,11 @@ export default function NewPostForm() {
     updateFormState(modifiedData);
     store(DRAFT_POST_CACHE_KEY, modifiedData);
 
-    if (!session) return signIn();
+    if (!session) {
+      // signIn();
+      console.error("signin not yet implemented");
+      return;
+    }
     commit(modifiedData);
   }
 
