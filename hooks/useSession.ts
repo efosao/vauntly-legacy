@@ -1,7 +1,7 @@
 import { User } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 
-import FirebaseContext from "../context/FirebaseContext";
+import FirebaseContext from "../context/FBContext";
 
 export default function useSession() {
   const { fbApp, fbAuth } = useContext(FirebaseContext);
