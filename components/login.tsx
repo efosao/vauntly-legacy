@@ -1,33 +1,10 @@
 import { UserIcon } from "@heroicons/react/solid";
-import { User } from "firebase/auth";
 import Link from "next/link";
-import { useContext, useState } from "react";
 
-import FirebaseContext from "../context/firebaseContext";
-// import { signIn, useSession } from "next-auth/react";
-// import axios from "axios";
+import useSession from "../hooks/useSession";
 
 export default function Component() {
-  const { fbApp, fbAuth } = useContext(FirebaseContext);
-
-  const [user, setUser] = useState<User | null>(null);
-
-  fbAuth?.onAuthStateChanged((user) => {
-    setUser(user);
-    const email = user?.email;
-    console.log({ email });
-  });
-
-  // const { data: session } = useSession();
-
-  // async function getToken() {
-  //   const { data } = await axios("/api/hello");
-  //   console.log({ data });
-  // }
-
-  // function callSignIn() {
-  //   signIn();
-  // }
+  const { user } = useSession();
 
   if (user) {
     return (
@@ -41,19 +18,12 @@ export default function Component() {
           </a>
         </Link>
         <span className="mx-4">{user.email}</span>
-
-        {/* <button className="button" onClick={getToken}>
-          Get Token Data
-        </button> */}
       </>
     );
   }
   return (
     <>
-      {/* <button className="button" onClick={callSignIn}>
-        Sign in
-      </button> */}
-      <Link className="button" href="/auth">
+      <Link className="button" href="/signin">
         Sign in
       </Link>
     </>

@@ -1,23 +1,20 @@
-// import { useSession } from "next-auth/react";
-
 import { SimpleLayout } from "../components/layouts";
+import useSession from "../hooks/useSession";
 
 export default function Page() {
-  const sessionResult = { data: { user: { email: "n/a" }, isAdmin: false } };
-  const email = sessionResult.data?.user?.email;
-  const isAdmin = !!sessionResult.data?.isAdmin;
+  const { user, fbAuth } = useSession();
 
-  function callSignOut() {
-    window.location.href = "/logout";
+  async function callSignOut() {
+    await fbAuth?.signOut();
+    window.location.href = "/";
   }
 
   return (
     <>
-      <div>Email: {email}</div>
-      <div>Is Admin?: {isAdmin ? "True" : "False"}</div>
+      <div>Email: {user?.email}</div>
       <div className="m-4 border rounded p-4">
         <pre className="whitespace-pre-wrap break-words">
-          {JSON.stringify(sessionResult, null, 4)}
+          {JSON.stringify(user, null, 4)}
         </pre>
       </div>
       <button className="button" onClick={callSignOut}>
@@ -28,4 +25,4 @@ export default function Page() {
 }
 
 Page.layout = SimpleLayout;
-Page.title = "Secured Page";
+Page.title = "Profile";

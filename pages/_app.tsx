@@ -5,7 +5,7 @@ import { NextPage } from "next/types";
 import { ReactElement, ReactNode } from "react";
 
 import { DefaultLayout, MainLayout } from "../components/layouts";
-import FirebaseContext from "../context/firebaseContext";
+import FirebaseContext from "../context/FirebaseContext";
 import { app as fbApp, auth as fbAuth } from "../utils/firebaseAuth";
 
 type NextPageWithLayout = NextPage & {
