@@ -140,22 +140,22 @@ export default function Page({ fallback }: PageProps) {
 
   const memoizedFetchNextPage = useCallback(fetchNextPage, [page, posts]);
 
-  // function isInViewport(element) {
-  //   if (!element) return false;
-  //   const rect = element.getBoundingClientRect();
-  //   return (
-  //     rect.top >= 0 &&
-  //     rect.left >= 0 &&
-  //     rect.bottom <=
-  //       (window.innerHeight || document.documentElement.clientHeight) &&
-  //     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  //   );
-  // }
+  function isInViewport(element) {
+    if (!element) return false;
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <=
+        (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 
-  // useEffect(() => {
-  //   const isLoaderVisible = isInViewport(loaderRef.current);
-  //   if (isLoaderVisible) memoizedFetchNextPage();
-  // }, [memoizedFetchNextPage]);
+  useEffect(() => {
+    const isLoaderVisible = isInViewport(loaderRef.current);
+    if (isLoaderVisible) memoizedFetchNextPage();
+  }, [memoizedFetchNextPage]);
 
   return (
     <SWRConfig value={fallback}>
