@@ -1,47 +1,50 @@
-import { request } from "graphql-request";
+// import { request } from "graphql-request";
 import { useCallback, useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
+
+import { trpc } from "~/utils/trpc";
 
 import Results from "../components/results";
 import Skeleton from "../components/results/skeleton";
 
-const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
-const fetcher = (query: string) => request(url, query);
+// const url = `${process.env.NEXT_PUBLIC_GQL_HOST}/v1/graphql`;
+// const fetcher = (query: string) => request(url, query);
 
-function genGetPostsQuery(pg = 0, size = 5): string {
-  return `query GetPostsQuery {
-    posts(limit: ${size}, offset: ${pg * size}, where: {
-      _or: [
-        {published_at: {_is_null: false }}, 
-        {created_by_user_id: {_is_null: false}}
-      ]}, order_by: {id: desc}) {
-      company_name
-      created_at
-      created_by_user_id
-      description
-      external_id
-      id
-      location
-      published_at
-      state
-      title
-      thumbnail
-      updated_at
-    }
-  }`;
-}
+// function genGetPostsQuery(pg = 0, size = 5): string {
+//   return `query GetPostsQuery {
+//     posts(limit: ${size}, offset: ${pg * size}, where: {
+//       _or: [
+//         {published_at: {_is_null: false }},
+//         {created_by_user_id: {_is_null: false}}
+//       ]}, order_by: {id: desc}) {
+//       company_name
+//       created_at
+//       created_by_user_id
+//       description
+//       external_id
+//       id
+//       location
+//       published_at
+//       state
+//       title
+//       thumbnail
+//       updated_at
+//     }
+//   }`;
+// }
 
-const getPostsQuery = genGetPostsQuery(0);
+// const getPostsQuery = genGetPostsQuery(0);
+// const getPostsQuery = trpc.useQuery(["hello", { limit: 10, skip: 0 }]);
 
 export async function getServerSideProps(ctx) {
-  const fallback = { [getPostsQuery]: null };
-  try {
-    const posts = await request(url, getPostsQuery);
-    fallback[getPostsQuery] = posts;
-  } catch (error) {
-    console.log({ error });
-  }
+  // const fallback = { ["getPostsQuery"]: null };
+  // try {
+  //   // const posts = await request(url, getPostsQuery);
+  //   fallback[getPostsQuery] = posts;
+  // } catch (error) {
+  //   console.log({ error });
+  // }
 
   const ONE_DAY_SECONDS = 60 * 60 * 24;
   ctx.res?.setHeader(
@@ -49,7 +52,8 @@ export async function getServerSideProps(ctx) {
     `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`
   );
 
-  return { props: { fallback } };
+  // return { props: { fallback } };
+  return { props: {} };
 }
 
 interface PageProps {
@@ -61,45 +65,97 @@ interface PageProps {
 }
 
 export default function Page({ fallback }: PageProps) {
-  const { data, error } = useSWR(getPostsQuery, fetcher, {
-    fallback,
-    revalidateOnMount: true
-  });
+  const limit = 20;
 
-  if (error) console.log({ error });
+  // if (!hello.data) {
+  //   return <div>Loading</div>;
+  // }
+
+  // return (
+  //   <div>
+  //     {hello.data.map(({ id, title }) => (
+  //       <p key={id}>{title}</p>
+  //     ))}
+  //   </div>
+  // );
+
+  // const { data, error } = useSWR(getPostsQuery, fetcher, {
+  //   fallback,
+  //   revalidateOnMount: true
+  // });
+
+  // if (error) console.log({ error });
+
+  const [page, setPage] = useState(0);
+  const skip = page * limit;
+  const postsResult = trpc.useQuery(["hello", { limit, skip }]);
 
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(0);
-  const [posts, setPosts] = useState(data?.posts ?? []);
-  const postCount: number = posts.length;
+  const [posts, setPosts] = useState<any[]>(postsResult.data || []);
+  const postCount: number = posts?.length || 0;
   const loaderRef = useRef(null);
 
+  // const postsResult = trpc.useQuery(["hello"]);
+  // const posts = postsResult.data || [];
+  // const postCount: number = posts?.length || 0;
+
+  // console.log({ hasMore, page, postCount });
+
+  useEffect(() => {
+    // console.log({ p: postsResult.data });
+    if (!postsResult.isLoading) {
+      // console.log("hhiiiii");
+      const newRecs = postsResult.data || [];
+      const dataToUpdate = skip ? [...posts, ...newRecs] : newRecs;
+      setPosts(dataToUpdate);
+      setHasMore(newRecs.length > 0);
+    }
+  }, [page, postsResult.isLoading]);
+
   async function fetchNextPage() {
-    const nextPosts = await request(url, genGetPostsQuery(page + 1));
-    setPage(page + 1);
-    setPosts(posts.concat(nextPosts.posts));
-    const hadResults = nextPosts.posts.length > 0;
-    setHasMore(hadResults);
+    const nextPage = page + 1;
+    console.log({ nextPage });
+    setPage(nextPage);
+    // const hadResults = nextPosts.length > 0;
+    // setHasMore(hadResults);
   }
+
+  // if (postsResult.data) return <div>{JSON.stringify(postsResult.data)}</div>;
+  // else return <>Loading</>;
+
+  // useEffect(() => {
+  //   if (!postsResult.isLoading) {
+  //     setPosts(postsResult.data || []);
+  //   }
+  // }, [postsResult]);
+
+  // async function fetchNextPage() {
+  //   const nextPostResult = await trpc.useQuery(["hello", { limit, skip: 0 }]);
+  //   const nextPosts = nextPostResult.data || [];
+  //   setPage(page + 1);
+  //   setPosts([...posts, ...nextPosts]);
+  //   const hadResults = nextPosts.length > 0;
+  //   setHasMore(hadResults);
+  // }
 
   const memoizedFetchNextPage = useCallback(fetchNextPage, [page, posts]);
 
-  function isInViewport(element) {
-    if (!element) return false;
-    const rect = element.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <=
-        (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-  }
+  // function isInViewport(element) {
+  //   if (!element) return false;
+  //   const rect = element.getBoundingClientRect();
+  //   return (
+  //     rect.top >= 0 &&
+  //     rect.left >= 0 &&
+  //     rect.bottom <=
+  //       (window.innerHeight || document.documentElement.clientHeight) &&
+  //     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  //   );
+  // }
 
-  useEffect(() => {
-    const isLoaderVisible = isInViewport(loaderRef.current);
-    if (isLoaderVisible) memoizedFetchNextPage();
-  }, [memoizedFetchNextPage]);
+  // useEffect(() => {
+  //   const isLoaderVisible = isInViewport(loaderRef.current);
+  //   if (isLoaderVisible) memoizedFetchNextPage();
+  // }, [memoizedFetchNextPage]);
 
   return (
     <SWRConfig value={fallback}>
@@ -120,7 +176,7 @@ export default function Page({ fallback }: PageProps) {
       <section className="flex px-2 sm:px-4 max-w-screen-lg mx-auto">
         <InfiniteScroll
           dataLength={postCount}
-          next={fetchNextPage}
+          next={memoizedFetchNextPage}
           hasMore={hasMore}
           loader={
             <>

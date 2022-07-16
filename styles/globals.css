@@ -5,6 +5,9 @@
 /* html {
   font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 } */
+body {
+  overscroll-behavior-y: none;
+}
 
 .tag-container {
   @apply flex flex-wrap items-center overflow-hidden h-[5rem];
