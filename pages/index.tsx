@@ -65,7 +65,7 @@ interface PageProps {
 }
 
 export default function Page({ fallback }: PageProps) {
-  const limit = 20;
+  const limit = 5;
 
   // if (!hello.data) {
   //   return <div>Loading</div>;
@@ -88,7 +88,7 @@ export default function Page({ fallback }: PageProps) {
 
   const [page, setPage] = useState(0);
   const skip = page * limit;
-  const postsResult = trpc.useQuery(["hello", { limit, skip }]);
+  const postsResult = trpc.useQuery(["hello", { limit, skip }], {});
 
   const [hasMore, setHasMore] = useState(true);
   const [posts, setPosts] = useState<any[]>(postsResult.data || []);
