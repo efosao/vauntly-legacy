@@ -113,32 +113,9 @@ export default function Page({ fallback }: PageProps) {
   }, [page, postsResult.isLoading]);
 
   async function fetchNextPage() {
-    const nextPage = page + 1;
-    console.log({ nextPage });
-    setPage(nextPage);
-    // const hadResults = nextPosts.length > 0;
-    // setHasMore(hadResults);
+    if (postsResult.isLoading) return;
+    setPage(page + 1);
   }
-
-  // if (postsResult.data) return <div>{JSON.stringify(postsResult.data)}</div>;
-  // else return <>Loading</>;
-
-  // useEffect(() => {
-  //   if (!postsResult.isLoading) {
-  //     setPosts(postsResult.data || []);
-  //   }
-  // }, [postsResult]);
-
-  // async function fetchNextPage() {
-  //   const nextPostResult = await trpc.useQuery(["hello", { limit, skip: 0 }]);
-  //   const nextPosts = nextPostResult.data || [];
-  //   setPage(page + 1);
-  //   setPosts([...posts, ...nextPosts]);
-  //   const hadResults = nextPosts.length > 0;
-  //   setHasMore(hadResults);
-  // }
-
-  const memoizedFetchNextPage = useCallback(fetchNextPage, [page, posts]);
 
   function isInViewport(element) {
     if (!element) return false;
@@ -154,8 +131,8 @@ export default function Page({ fallback }: PageProps) {
 
   useEffect(() => {
     const isLoaderVisible = isInViewport(loaderRef.current);
-    if (isLoaderVisible) memoizedFetchNextPage();
-  }, [memoizedFetchNextPage]);
+    if (isLoaderVisible && !postsResult.isLoading) fetchNextPage();
+  }, [fetchNextPage]);
 
   return (
     <SWRConfig value={fallback}>
@@ -176,7 +153,7 @@ export default function Page({ fallback }: PageProps) {
       <section className="flex px-2 sm:px-4 max-w-screen-lg mx-auto">
         <InfiniteScroll
           dataLength={postCount}
-          next={memoizedFetchNextPage}
+          next={fetchNextPage}
           hasMore={hasMore}
           loader={
             <>
