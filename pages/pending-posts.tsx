@@ -11,7 +11,7 @@ type PostType = {
   created_at: string;
   description: string | undefined;
   external_id: string;
-  published_at: string;
+  published_at: Date;
   thumbnail: string | null | undefined;
   title: string | null | undefined;
 };

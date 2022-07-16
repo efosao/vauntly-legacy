@@ -5,6 +5,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
-export function getFriendlyDuration(fromDate: string): string {
+export function getFriendlyDuration(fromDate: Date | string): string {
   return dayjs().to(dayjs(fromDate));
 }

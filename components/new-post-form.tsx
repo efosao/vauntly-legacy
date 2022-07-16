@@ -304,7 +304,7 @@ export default function NewPostForm() {
                   company={formState?.company_name}
                   description={formState?.description}
                   extId="temp"
-                  publishedAt={new Date().toString()}
+                  publishedAt={new Date()}
                   thumbnail={null}
                   title={formState?.position}
                 />

@@ -10,7 +10,7 @@ type SearchRowType = {
   extId: string | null | undefined;
   color: string;
   company: string;
-  publishedAt: string;
+  publishedAt: Date;
   description: string;
   thumbnail: string | null | undefined;
   title: string | null | undefined;
