@@ -6,8 +6,7 @@
     "node": "16"
   },
   "scripts": {
-    "pre:build": "prisma generate",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "pre:dev": "prisma generate",
     "dev": "prisma generate && next dev",
     "fix": "next lint --fix",
