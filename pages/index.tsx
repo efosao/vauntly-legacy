@@ -37,7 +37,7 @@ import Skeleton from "../components/results/skeleton";
 // const getPostsQuery = genGetPostsQuery(0);
 // const getPostsQuery = trpc.useQuery(["hello", { limit: 10, skip: 0 }]);
 
-export async function getServerSideProps(ctx) {
+export async function getStaticProps(ctx) {
   // const fallback = { ["getPostsQuery"]: null };
   // try {
   //   // const posts = await request(url, getPostsQuery);
