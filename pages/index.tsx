@@ -1,5 +1,5 @@
 // import { request } from "graphql-request";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SWRConfig } from "swr";
 
@@ -65,7 +65,7 @@ interface PageProps {
 }
 
 export default function Page({ fallback }: PageProps) {
-  const limit = 5;
+  const limit = 20;
 
   // if (!hello.data) {
   //   return <div>Loading</div>;
