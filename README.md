@@ -1,34 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vauntly Jobs Board
 
-## Getting Started
+Job board web app for browsing, creating, and moderating job posts. Supports importing listings from Google Jobs (via SerpAPI), with auth, a Postgres data layer, and a Hasura GraphQL API.
 
-First, run the development server:
+**Repo:** <https://github.com/efosao/vauntly-legacy>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Language:** TypeScript
+- **App:** Next.js (Pages Router) + React + tRPC
+- **UI:** Tailwind CSS
+- **Data:** PostgreSQL + Prisma + Hasura
+- **Auth:** Firebase
+- **Import:** `google-search-results-nodejs` (SerpAPI Google Jobs)
+  ~8,600 lines of tracked source (including lockfile and config). No AI/LLM
+  features; not AI-written.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Features
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Browse fresh job posts
+- Create job posts
+- Review pending posts
+- User sign-in / profile
+- Bulk import from Google Jobs SERP results
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Getting started
 
-## Learn More
+  Requires **Node 16** and **pnpm**.
 
-To learn more about Next.js, take a look at the following resources:
+  ```bash
+  pnpm install
+  pnpm pre:dev   # prisma generate
+  pnpm dev
+  ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  App: [http://localhost:3000](http://localhost:3000)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Useful scripts
 
-## Deploy on Vercel
+  | Script | Purpose |
+  |--------|---------|
+  | `pnpm dev` | Generate Prisma client and start Next.js |
+  | `pnpm build` | Production build |
+  | `pnpm start` | Run production server |
+  | `pnpm lint` / `pnpm fix` | Lint / auto-fix |
+  | `pnpm import` | Run Google Jobs import (`src/import.mjs`) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Environment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  Configure at least:
+
+- `DATABASE_URL` — PostgreSQL connection string (Prisma)
+- Firebase client/admin credentials for auth
+- SerpAPI key for job import (if using `pnpm import`)
+- Hasura endpoint / admin secret (see `docker-compose.yaml` for local GraphQL
+  engine)
+  Hasura can be started with:
+
+  ```bash
+  docker compose up
+  ```
+
+  Console defaults to [http://localhost:8080](http://localhost:8080).
+
+## Project layout
+
+  pages/        Next.js routes and API
+  components/   UI
+  lib/          Shared client/server helpers
+  prisma/       Schema and client
+  hasura/       Hasura metadata
+  src/          Import tooling
+
+## License
+
+  Private (`package.json`).
+
+  ★ Insight ─────────────────────────────────────
+  • Drop the stock create-next-app README; it says nothing about jobs, Hasura,
+    or Firebase.
+  • Keep secrets out of the README — your docker-compose.yaml has live DB/JWT
+    values that should stay env-only.
+
+  ─────────────────────────────────────────────────
