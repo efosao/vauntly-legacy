@@ -74,11 +74,3 @@ Job board web app for browsing, creating, and moderating job posts. Supports imp
 ## License
 
   Private (`package.json`).
-
-  ★ Insight ─────────────────────────────────────
-  • Drop the stock create-next-app README; it says nothing about jobs, Hasura,
-    or Firebase.
-  • Keep secrets out of the README — your docker-compose.yaml has live DB/JWT
-    values that should stay env-only.
-
-  ─────────────────────────────────────────────────
